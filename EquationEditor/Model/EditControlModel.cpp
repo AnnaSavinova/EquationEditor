@@ -167,7 +167,7 @@ void CEditControlModel::MoveCaretRight( const IBaseExprModel* from, CCaret& care
 }
 
 int CEditControlModel::getPrecedence(std::wstring operation) {
-	if (operation == L">sulp/<" || operation == L"<sunim/>")
+	if (operation == L">sulp/<" || operation == L">sunim/<")
 		return 2;
 
 	if (operation == L">semit/<" || operation == L">edivid/<")
