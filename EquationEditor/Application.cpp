@@ -69,7 +69,7 @@ STDMETHODIMP CApplication::QueryInterface(REFIID iid, void** ppv)
 //  FUNCTION: OnCreateUICommand(UINT, UI_COMMANDTYPE, IUICommandHandler)
 //
 //  PURPOSE: вызывается для каждой команды указанной в Markup
-//
+//	
 //
 STDMETHODIMP CApplication::OnCreateUICommand(
 	UINT nCmdID,
@@ -144,7 +144,7 @@ STDMETHODIMP CApplication::OnViewChanged(
 
 
 //
-//  FUNCTION: OnDestroyUICommand(UINT, UI_COMMANDTYPE, IUICommandHandler*)
+//  FUNCTION: OnDestroyUICommand(UINT, UI_COMMANDTYPE, IUICommandHandler*);
 //
 //
 STDMETHODIMP CApplication::OnDestroyUICommand(
