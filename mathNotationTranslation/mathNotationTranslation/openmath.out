@@ -1,0 +1,773 @@
+Terminals unused in grammar
+
+   SQRT
+   USUB
+   END_OF_FILE
+
+
+Grammar
+
+    0 $accept: list $end
+
+    1 list: stm
+    2     | list stm
+
+    3 stm: LNUM stm RNUM
+    4    | LID stm RID
+    5    | LOBJ list ROBJ
+    6    | LAPP list RAPP
+    7    | binop
+    8    | NUMBER
+    9    | ID
+
+   10 binop: ADD stm stm
+   11      | SUB stm stm
+   12      | MUL stm stm
+   13      | DIV stm stm
+   14      | EQ stm stm
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUMBER (258) 8
+ID (259) 9
+ADD (260) 10
+MUL (261) 12
+SUB (262) 11
+DIV (263) 13
+EQ (264) 14
+SQRT (265)
+USUB (266)
+LOBJ (267) 5
+ROBJ (268) 5
+LAPP (269) 6
+RAPP (270) 6
+LNUM (271) 3
+RNUM (272) 3
+LID (273) 4
+RID (274) 4
+END_OF_FILE (275)
+
+
+Nonterminals, with rules where they appear
+
+$accept (21)
+    on left: 0
+list (22)
+    on left: 1 2, on right: 0 2 5 6
+stm (23)
+    on left: 3 4 5 6 7 8 9, on right: 1 2 3 4 10 11 12 13 14
+binop (24)
+    on left: 10 11 12 13 14, on right: 7
+
+
+State 0
+
+    0 $accept: . list $end
+    1 list: . stm
+    2     | . list stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    list   go to state 12
+    stm    go to state 13
+    binop  go to state 14
+
+
+State 1
+
+    8 stm: NUMBER .
+
+    $default  reduce using rule 8 (stm)
+
+
+State 2
+
+    9 stm: ID .
+
+    $default  reduce using rule 9 (stm)
+
+
+State 3
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   10      | ADD . stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 15
+    binop  go to state 14
+
+
+State 4
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   12      | MUL . stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 16
+    binop  go to state 14
+
+
+State 5
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   11      | SUB . stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 17
+    binop  go to state 14
+
+
+State 6
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   13      | DIV . stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 18
+    binop  go to state 14
+
+
+State 7
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+   14      | EQ . stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 19
+    binop  go to state 14
+
+
+State 8
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    5    | LOBJ . list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    list   go to state 20
+    stm    go to state 13
+    binop  go to state 14
+
+
+State 9
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    6    | LAPP . list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    list   go to state 21
+    stm    go to state 13
+    binop  go to state 14
+
+
+State 10
+
+    3 stm: . LNUM stm RNUM
+    3    | LNUM . stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 22
+    binop  go to state 14
+
+
+State 11
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    4    | LID . stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 23
+    binop  go to state 14
+
+
+State 12
+
+    0 $accept: list . $end
+    2 list: list . stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    $end    shift, and go to state 24
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 25
+    binop  go to state 14
+
+
+State 13
+
+    1 list: stm .
+
+    $default  reduce using rule 1 (list)
+
+
+State 14
+
+    7 stm: binop .
+
+    $default  reduce using rule 7 (stm)
+
+
+State 15
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   10      | ADD stm . stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 26
+    binop  go to state 14
+
+
+State 16
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   12      | MUL stm . stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 27
+    binop  go to state 14
+
+
+State 17
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   11      | SUB stm . stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 28
+    binop  go to state 14
+
+
+State 18
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   13      | DIV stm . stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 29
+    binop  go to state 14
+
+
+State 19
+
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+   14      | EQ stm . stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 30
+    binop  go to state 14
+
+
+State 20
+
+    2 list: list . stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    5    | LOBJ list . ROBJ
+    6    | . LAPP list RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    ROBJ    shift, and go to state 31
+    LAPP    shift, and go to state 9
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 25
+    binop  go to state 14
+
+
+State 21
+
+    2 list: list . stm
+    3 stm: . LNUM stm RNUM
+    4    | . LID stm RID
+    5    | . LOBJ list ROBJ
+    6    | . LAPP list RAPP
+    6    | LAPP list . RAPP
+    7    | . binop
+    8    | . NUMBER
+    9    | . ID
+   10 binop: . ADD stm stm
+   11      | . SUB stm stm
+   12      | . MUL stm stm
+   13      | . DIV stm stm
+   14      | . EQ stm stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    ADD     shift, and go to state 3
+    MUL     shift, and go to state 4
+    SUB     shift, and go to state 5
+    DIV     shift, and go to state 6
+    EQ      shift, and go to state 7
+    LOBJ    shift, and go to state 8
+    LAPP    shift, and go to state 9
+    RAPP    shift, and go to state 32
+    LNUM    shift, and go to state 10
+    LID     shift, and go to state 11
+
+    stm    go to state 25
+    binop  go to state 14
+
+
+State 22
+
+    3 stm: LNUM stm . RNUM
+
+    RNUM  shift, and go to state 33
+
+
+State 23
+
+    4 stm: LID stm . RID
+
+    RID  shift, and go to state 34
+
+
+State 24
+
+    0 $accept: list $end .
+
+    $default  accept
+
+
+State 25
+
+    2 list: list stm .
+
+    $default  reduce using rule 2 (list)
+
+
+State 26
+
+   10 binop: ADD stm stm .
+
+    $default  reduce using rule 10 (binop)
+
+
+State 27
+
+   12 binop: MUL stm stm .
+
+    $default  reduce using rule 12 (binop)
+
+
+State 28
+
+   11 binop: SUB stm stm .
+
+    $default  reduce using rule 11 (binop)
+
+
+State 29
+
+   13 binop: DIV stm stm .
+
+    $default  reduce using rule 13 (binop)
+
+
+State 30
+
+   14 binop: EQ stm stm .
+
+    $default  reduce using rule 14 (binop)
+
+
+State 31
+
+    5 stm: LOBJ list ROBJ .
+
+    $default  reduce using rule 5 (stm)
+
+
+State 32
+
+    6 stm: LAPP list RAPP .
+
+    $default  reduce using rule 6 (stm)
+
+
+State 33
+
+    3 stm: LNUM stm RNUM .
+
+    $default  reduce using rule 3 (stm)
+
+
+State 34
+
+    4 stm: LID stm RID .
+
+    $default  reduce using rule 4 (stm)

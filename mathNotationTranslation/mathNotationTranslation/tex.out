@@ -1,0 +1,657 @@
+Terminals unused in grammar
+
+   SUP
+   SQRT
+   END_OF_FILE
+
+
+Grammar
+
+    0 $accept: list $end
+
+    1 list: stm
+    2     | list stm
+
+    3 stm: FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | LPAREN list RPAREN
+    5    | LBRACE list RBRACE
+    6    | binop
+    7    | NUMBER
+    8    | ID
+
+    9 binop: stm ADD stm
+   10      | stm EQ stm
+   11      | stm SUB stm
+   12      | stm MUL stm
+   13      | stm DIV stm
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUMBER (258) 7
+ID (259) 8
+ADD (260) 9
+MUL (261) 12
+SUB (262) 11
+DIV (263) 13
+EQ (264) 10
+SUP (265)
+LBRACE (266) 3 5
+RBRACE (267) 3 5
+FRAC (268) 3
+SQRT (269)
+LPAREN (270) 4
+RPAREN (271) 4
+END_OF_FILE (272)
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+list (19)
+    on left: 1 2, on right: 0 2 3 4 5
+stm (20)
+    on left: 3 4 5 6 7 8, on right: 1 2 9 10 11 12 13
+binop (21)
+    on left: 9 10 11 12 13, on right: 6
+
+
+State 0
+
+    0 $accept: . list $end
+    1 list: . stm
+    2     | . list stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    list   go to state 6
+    stm    go to state 7
+    binop  go to state 8
+
+
+State 1
+
+    7 stm: NUMBER .
+
+    $default  reduce using rule 7 (stm)
+
+
+State 2
+
+    8 stm: ID .
+
+    $default  reduce using rule 8 (stm)
+
+
+State 3
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    5    | LBRACE . list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    list   go to state 9
+    stm    go to state 7
+    binop  go to state 8
+
+
+State 4
+
+    3 stm: FRAC . LBRACE list RBRACE LBRACE list RBRACE
+
+    LBRACE  shift, and go to state 10
+
+
+State 5
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    4    | LPAREN . list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    list   go to state 11
+    stm    go to state 7
+    binop  go to state 8
+
+
+State 6
+
+    0 $accept: list . $end
+    2 list: list . stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    $end    shift, and go to state 12
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 13
+    binop  go to state 8
+
+
+State 7
+
+    1 list: stm .  [$end, NUMBER, ID, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+
+    ADD  shift, and go to state 14
+    MUL  shift, and go to state 15
+    SUB  shift, and go to state 16
+    DIV  shift, and go to state 17
+    EQ   shift, and go to state 18
+
+    $default  reduce using rule 1 (list)
+
+
+State 8
+
+    6 stm: binop .
+
+    $default  reduce using rule 6 (stm)
+
+
+State 9
+
+    2 list: list . stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    5    | LBRACE list . RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    RBRACE  shift, and go to state 19
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 13
+    binop  go to state 8
+
+
+State 10
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    3    | FRAC LBRACE . list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    list   go to state 20
+    stm    go to state 7
+    binop  go to state 8
+
+
+State 11
+
+    2 list: list . stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    4    | LPAREN list . RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+    RPAREN  shift, and go to state 21
+
+    stm    go to state 13
+    binop  go to state 8
+
+
+State 12
+
+    0 $accept: list $end .
+
+    $default  accept
+
+
+State 13
+
+    2 list: list stm .  [$end, NUMBER, ID, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+
+    ADD  shift, and go to state 14
+    MUL  shift, and go to state 15
+    SUB  shift, and go to state 16
+    DIV  shift, and go to state 17
+    EQ   shift, and go to state 18
+
+    $default  reduce using rule 2 (list)
+
+
+State 14
+
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+    9      | stm ADD . stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 22
+    binop  go to state 8
+
+
+State 15
+
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   12      | stm MUL . stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 23
+    binop  go to state 8
+
+
+State 16
+
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   11      | stm SUB . stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 24
+    binop  go to state 8
+
+
+State 17
+
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+   13      | stm DIV . stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 25
+    binop  go to state 8
+
+
+State 18
+
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   10      | stm EQ . stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 26
+    binop  go to state 8
+
+
+State 19
+
+    5 stm: LBRACE list RBRACE .
+
+    $default  reduce using rule 5 (stm)
+
+
+State 20
+
+    2 list: list . stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    3    | FRAC LBRACE list . RBRACE LBRACE list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    RBRACE  shift, and go to state 27
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 13
+    binop  go to state 8
+
+
+State 21
+
+    4 stm: LPAREN list RPAREN .
+
+    $default  reduce using rule 4 (stm)
+
+
+State 22
+
+    9 binop: stm . ADD stm
+    9      | stm ADD stm .  [$end, NUMBER, ID, ADD, SUB, EQ, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+
+    MUL  shift, and go to state 15
+    DIV  shift, and go to state 17
+
+    $default  reduce using rule 9 (binop)
+
+    Conflict between rule 9 and token ADD resolved as reduce (%left ADD).
+    Conflict between rule 9 and token MUL resolved as shift (ADD < MUL).
+    Conflict between rule 9 and token SUB resolved as reduce (%left SUB).
+    Conflict between rule 9 and token DIV resolved as shift (ADD < DIV).
+    Conflict between rule 9 and token EQ resolved as reduce (%left EQ).
+
+
+State 23
+
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   12      | stm MUL stm .  [$end, NUMBER, ID, ADD, MUL, SUB, DIV, EQ, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+   13      | stm . DIV stm
+
+    $default  reduce using rule 12 (binop)
+
+    Conflict between rule 12 and token ADD resolved as reduce (ADD < MUL).
+    Conflict between rule 12 and token MUL resolved as reduce (%left MUL).
+    Conflict between rule 12 and token SUB resolved as reduce (SUB < MUL).
+    Conflict between rule 12 and token DIV resolved as reduce (%left DIV).
+    Conflict between rule 12 and token EQ resolved as reduce (EQ < MUL).
+
+
+State 24
+
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   11      | stm SUB stm .  [$end, NUMBER, ID, ADD, SUB, EQ, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+
+    MUL  shift, and go to state 15
+    DIV  shift, and go to state 17
+
+    $default  reduce using rule 11 (binop)
+
+    Conflict between rule 11 and token ADD resolved as reduce (%left ADD).
+    Conflict between rule 11 and token MUL resolved as shift (SUB < MUL).
+    Conflict between rule 11 and token SUB resolved as reduce (%left SUB).
+    Conflict between rule 11 and token DIV resolved as shift (SUB < DIV).
+    Conflict between rule 11 and token EQ resolved as reduce (%left EQ).
+
+
+State 25
+
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+   13      | stm DIV stm .  [$end, NUMBER, ID, ADD, MUL, SUB, DIV, EQ, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+
+    $default  reduce using rule 13 (binop)
+
+    Conflict between rule 13 and token ADD resolved as reduce (ADD < DIV).
+    Conflict between rule 13 and token MUL resolved as reduce (%left MUL).
+    Conflict between rule 13 and token SUB resolved as reduce (SUB < DIV).
+    Conflict between rule 13 and token DIV resolved as reduce (%left DIV).
+    Conflict between rule 13 and token EQ resolved as reduce (EQ < DIV).
+
+
+State 26
+
+    9 binop: stm . ADD stm
+   10      | stm . EQ stm
+   10      | stm EQ stm .  [$end, NUMBER, ID, ADD, SUB, EQ, LBRACE, RBRACE, FRAC, LPAREN, RPAREN]
+   11      | stm . SUB stm
+   12      | stm . MUL stm
+   13      | stm . DIV stm
+
+    MUL  shift, and go to state 15
+    DIV  shift, and go to state 17
+
+    $default  reduce using rule 10 (binop)
+
+    Conflict between rule 10 and token ADD resolved as reduce (%left ADD).
+    Conflict between rule 10 and token MUL resolved as shift (EQ < MUL).
+    Conflict between rule 10 and token SUB resolved as reduce (%left SUB).
+    Conflict between rule 10 and token DIV resolved as shift (EQ < DIV).
+    Conflict between rule 10 and token EQ resolved as reduce (%left EQ).
+
+
+State 27
+
+    3 stm: FRAC LBRACE list RBRACE . LBRACE list RBRACE
+
+    LBRACE  shift, and go to state 28
+
+
+State 28
+
+    1 list: . stm
+    2     | . list stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    3    | FRAC LBRACE list RBRACE LBRACE . list RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    list   go to state 29
+    stm    go to state 7
+    binop  go to state 8
+
+
+State 29
+
+    2 list: list . stm
+    3 stm: . FRAC LBRACE list RBRACE LBRACE list RBRACE
+    3    | FRAC LBRACE list RBRACE LBRACE list . RBRACE
+    4    | . LPAREN list RPAREN
+    5    | . LBRACE list RBRACE
+    6    | . binop
+    7    | . NUMBER
+    8    | . ID
+    9 binop: . stm ADD stm
+   10      | . stm EQ stm
+   11      | . stm SUB stm
+   12      | . stm MUL stm
+   13      | . stm DIV stm
+
+    NUMBER  shift, and go to state 1
+    ID      shift, and go to state 2
+    LBRACE  shift, and go to state 3
+    RBRACE  shift, and go to state 30
+    FRAC    shift, and go to state 4
+    LPAREN  shift, and go to state 5
+
+    stm    go to state 13
+    binop  go to state 8
+
+
+State 30
+
+    3 stm: FRAC LBRACE list RBRACE LBRACE list RBRACE .
+
+    $default  reduce using rule 3 (stm)
