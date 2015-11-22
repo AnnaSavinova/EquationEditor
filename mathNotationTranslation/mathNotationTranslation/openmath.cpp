@@ -394,12 +394,12 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[143] =
     {   0,
-        0,    0,   22,   20,   18,   19,   20,    2,   20,    1,
-       19,    0,    0,    2,    0,    0,    1,   10,    2,    0,
+        0,    0,   22,   20,   18,   19,   20,    1,   20,   17,
+       19,    0,    0,    1,    0,    0,   17,    9,    1,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        5,    7,    0,    0,    0,    6,    8,    0,    0,    0,
-        0,    0,    3,    0,    0,    4,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    9,    0,    0,    0,    0,
+        4,    6,    0,    0,    0,    5,    7,    0,    0,    0,
+        0,    0,    2,    0,    0,    3,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    8,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -407,9 +407,9 @@ static yyconst flex_int16_t yy_accept[143] =
 
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,   13,   16,    0,    0,    0,    0,
-       12,   15,    0,   11,   14,    0,    0,    0,    0,    0,
-       17,    0
+        0,    0,    0,    0,   12,   15,    0,    0,    0,    0,
+       11,   14,    0,   10,   13,    0,    0,    0,    0,    0,
+       16,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -837,87 +837,87 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 32 "openmath.l"
-{ strcpy_s(omlval.identName, omtext); return ID; }
+{ omlval.value = atof(omtext); return NUMBER; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 33 "openmath.l"
-{ omlval.value = atof(omtext); return NUMBER; }
+{ return LOBJ; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 34 "openmath.l"
-{ return LOBJ; }
+{ return ROBJ; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 35 "openmath.l"
-{ return ROBJ; }
+{ return LAPP; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 36 "openmath.l"
-{ return LAPP; }
+{ return RAPP; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 37 "openmath.l"
-{ return RAPP; }
+{ return LNUM; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 38 "openmath.l"
-{ return LNUM; }
+{ return RNUM; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 39 "openmath.l"
-{ return RNUM; }
+{ return LID; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 40 "openmath.l"
-{ return LID; }
+{ return RID; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 41 "openmath.l"
-{ return RID; }
+#line 42 "openmath.l"
+{ return EQ; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 43 "openmath.l"
-{ return EQ; }
+{ return SUB; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 44 "openmath.l"
-{ return SUB; }
+{ return ADD; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 45 "openmath.l"
-{ return ADD; }
+{ return DIV; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 46 "openmath.l"
-{ return DIV; }
+{ return MUL; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 47 "openmath.l"
-{ return MUL; }
+{ return SQRT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 48 "openmath.l"
-{ return SQRT; }
+{ return USUB; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 49 "openmath.l"
-{ return USUB; }
+{ strcpy_s(omlval.identName, omtext); return ID; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP

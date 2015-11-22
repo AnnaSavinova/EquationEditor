@@ -1,15 +1,15 @@
-<OMA>
-<OMA>
-<OMS cd="relation1" name="eq"/>
-<OMV name="x">
-<OMS cd="arith1" name="divide"/>
-<OMA>
-<OMS cd="arith1" name="plus"/>
-<OMI> 5.1 </OMI>
-<OMV name="y">
-</OMA>
-<OMA>
-<OMI> 4 </OMI>
-</OMA>
-</OMA>
-</OMA>
+<OMOBJ>
+  <OMA>
+    <OMS cd="relation1" name="eq"/>
+    <OMV name="y"/>
+    <OMA>
+      <OMS cd="arith1" name="times"/>
+        <OMA>
+          <OMS cd="arith1" name="minus"/>
+          <OMV name="x"/>
+          <OMI> 3 </OMI>
+        </OMA>
+      <OMI> 4 </OMI>
+    </OMA>
+  </OMA>
+</OMOBJ>

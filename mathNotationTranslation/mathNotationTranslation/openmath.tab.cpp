@@ -1427,7 +1427,7 @@ yyreduce:
   case 6:
 /* Line 1792 of yacc.c  */
 #line 43 "openmath.y"
-    { (yyval.node) = (yyvsp[(2) - (3)].composite_node); FOUT<<(yyval.node)->translate(NOTATION); }
+    { (yyval.node) = (yyvsp[(2) - (3)].composite_node); FOUT << (yyval.node)->translate(NOTATION); }
     break;
 
   case 7:

@@ -42,24 +42,21 @@ int main(int argc, char** argv) {
 		NOTATION = to_notation;
 
 		if (from == "mathml") {
-			fopen_s( &mlin, input.c_str(), "r" );
-			if (mlin == NULL)
+			if ( fopen_s( &mlin, input.c_str(), "r" ) != 0 )
 				throw new invalid_argument("File not found");
 			FOUT.open(output, std::ofstream::out);
 			mlparse();
 			fclose(mlin);
 		}
 		else if (from == "tex") {
-			fopen_s( &texin, input.c_str(), "r" );
-			if (texin == NULL)
+			if ( fopen_s( &texin, input.c_str(), "r" ) != 0 )
 				throw new invalid_argument("File not found");
 			FOUT.open(output, std::ofstream::out);
 			texparse();
 			fclose(texin);
 		}
 		else if (from == "openmath") {
-			fopen_s( &omin, input.c_str(), "r" );
-			if (omin == NULL)
+			if ( fopen_s( &omin, input.c_str(), "r" ) != 0 )
 				throw new invalid_argument("File not found");
 			FOUT.open(output, std::ofstream::out);
 			omparse();

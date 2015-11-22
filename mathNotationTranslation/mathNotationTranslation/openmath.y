@@ -40,7 +40,7 @@ list: stm { $$ = new CompositeNode($1); }
 
 stm: LNUM stm RNUM { $$ = $2; }
    | LID stm RID { $$ = $2; }
-   | LOBJ list ROBJ { $$ = $2; FOUT<<$$->translate(NOTATION); }
+   | LOBJ list ROBJ { $$ = $2; FOUT << $$->translate(NOTATION); }
    | LAPP list RAPP { $$ = $2; }
    | binop { $$ = $1; }
    | NUMBER { $$ = new NumNode(omlval.value); }

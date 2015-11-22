@@ -29,7 +29,6 @@ NUMBER			([0-9]+)(\.[0-9]+)?
 END_OF_FILE		<<EOF>>
 
 %%
-{ID}			{ strcpy_s(omlval.identName, omtext); return ID; }
 {NUMBER}		{ omlval.value = atof(omtext); return NUMBER; }
 {LOBJ}			{ return LOBJ; }
 {ROBJ}			{ return ROBJ; }
@@ -47,6 +46,7 @@ END_OF_FILE		<<EOF>>
 {TIMES}			{ return MUL; }
 {ROOT}			{ return SQRT; }
 {UMINUS}		{ return USUB; }
+{ID}			{ strcpy_s(omlval.identName, omtext); return ID; }
 
 
 {WHITESPACE}     			{}
