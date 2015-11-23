@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EquationEditor", "EquationE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mathNotationTranslation", "mathNotationTranslation\mathNotationTranslation\mathNotationTranslation.vcxproj", "{597F742F-0518-4300-9AFE-D282B8FC55D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Plotter-ABBYY", "Plotter-ABBYY\Plotter-ABBYY\Plotter-ABBYY.vcxproj", "{78B49263-5044-46CE-97C4-5C980276BE3B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Plotter-ABBYY", "Plotter\Plotter-ABBYY\Plotter-ABBYY.vcxproj", "{78B49263-5044-46CE-97C4-5C980276BE3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
