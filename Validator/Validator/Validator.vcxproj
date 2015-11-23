@@ -118,32 +118,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CCalculator.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\common.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTag.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagCi.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagCn.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagContainer.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagDeclare.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagFunctions.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTagQualifiers.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\CTree.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\FormulaComputability\FormulaComputability.h" />
-    <ClInclude Include="..\..\..\FormulaComputability\pugixml\pugiconfig.hpp" />
-    <ClInclude Include="..\..\..\FormulaComputability\pugixml\pugixml.hpp" />
+    <ClInclude Include="..\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="..\pugixml\pugixml.hpp" />
+    <ClInclude Include="CCalculator.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="Computability.h" />
+    <ClInclude Include="CTag.h" />
+    <ClInclude Include="CTagApplyReln.h" />
+    <ClInclude Include="CTagCi.h" />
+    <ClInclude Include="CTagCn.h" />
+    <ClInclude Include="CTagContainer.h" />
+    <ClInclude Include="CTagDeclare.h" />
+    <ClInclude Include="CTagFunctions.h" />
+    <ClInclude Include="CTagQualifiers.h" />
+    <ClInclude Include="CTree.h" />
+    <ClInclude Include="FormulaComputability.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CCalculator.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTag.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTagCi.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTagCn.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTagContainer.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTagDeclare.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\CTagQualifiers.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\FormulaComputability.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\FormulaComputability\main.cpp" />
-    <ClCompile Include="..\..\..\FormulaComputability\pugixml\pugixml.cpp" />
+    <ClCompile Include="..\pugixml\pugixml.cpp" />
+    <ClCompile Include="CCalculator.cpp" />
+    <ClCompile Include="CTag.cpp" />
+    <ClCompile Include="CTagCi.cpp" />
+    <ClCompile Include="CTagCn.cpp" />
+    <ClCompile Include="CTagContainer.cpp" />
+    <ClCompile Include="CTagDeclare.cpp" />
+    <ClCompile Include="CTagQualifiers.cpp" />
+    <ClCompile Include="FormulaComputability.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
