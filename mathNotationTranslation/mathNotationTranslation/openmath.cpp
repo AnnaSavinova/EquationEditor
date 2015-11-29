@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
+#line 2 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
 
-#line 4 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
+#line 4 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -570,7 +570,7 @@ char *omtext;
 #include "openmath.tab.hpp"
 //FlexLexer* lexer = new omFlexLexer();
 void omerror(const char *);
-#line 574 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
+#line 574 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
 
 #define INITIAL 0
 
@@ -751,7 +751,7 @@ YY_DECL
     
 #line 31 "openmath.l"
 
-#line 755 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
+#line 755 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -944,7 +944,7 @@ YY_RULE_SETUP
 #line 56 "openmath.l"
 ECHO;
 	YY_BREAK
-#line 948 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
+#line 948 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\openmath.cpp"
 
 	case YY_END_OF_BUFFER:
 		{

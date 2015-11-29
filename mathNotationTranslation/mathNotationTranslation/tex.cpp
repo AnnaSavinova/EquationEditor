@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
+#line 2 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
 
-#line 4 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
+#line 4 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -496,7 +496,7 @@ char *textext;
 #include "tex.tab.hpp"
 //FlexLexer* lexer = new texFlexLexer();
 void texerror(const char *);
-#line 500 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
+#line 500 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
 
 #define INITIAL 0
 
@@ -677,7 +677,7 @@ YY_DECL
     
 #line 23 "tex.l"
 
-#line 681 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
+#line 681 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -855,7 +855,7 @@ YY_RULE_SETUP
 #line 43 "tex.l"
 ECHO;
 	YY_BREAK
-#line 859 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
+#line 859 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\tex.cpp"
 
 	case YY_END_OF_BUFFER:
 		{

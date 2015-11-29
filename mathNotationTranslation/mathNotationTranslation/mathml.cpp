@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
+#line 2 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
 
-#line 4 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
+#line 4 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -529,7 +529,7 @@ std::ofstream FOUT;
 
 //FlexLexer* lexer = new mlFlexLexer();
 void mlerror(const char *);
-#line 533 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
+#line 533 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
 
 #define INITIAL 0
 
@@ -710,7 +710,7 @@ YY_DECL
     
 #line 34 "mathml.l"
 
-#line 714 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
+#line 714 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -898,7 +898,7 @@ YY_RULE_SETUP
 #line 58 "mathml.l"
 ECHO;
 	YY_BREAK
-#line 902 "C:\\Users\\Anna\\Plotter\\EquationEditor\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
+#line 902 "C:\\Users\\anata_000\\Source\\Repos\\EquationEditor2\\mathNotationTranslation\\mathNotationTranslation\\mathml.cpp"
 
 	case YY_END_OF_BUFFER:
 		{

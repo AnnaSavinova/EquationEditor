@@ -178,10 +178,15 @@ inline int IBaseExprModel::GetDepth() const {
 
 inline bool IBaseExprModel::DeleteSelectedPart() {
 	auto children = GetChildren();
-	bool result = true;
-	for( auto it = children.begin(); it != children.end(); ++it ) {
+	bool result = false;
+	auto it = children.begin();
+	while (it != children.end()) {
 		// Если нужно дополнительное вмешательство
-		result &= (*it)->DeleteSelectedPart();
+		result |= (*it)->DeleteSelectedPart();
+		if (!result)
+			children.erase(it++);
+		else
+			it++;
 	}
 	return result;
 }
