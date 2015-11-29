@@ -131,6 +131,8 @@ void CEquationPresenter::DeleteSymbol( bool withCtrl )
 		int line = parentSystem->FindLineNum( caret.GetCurEdit() );
 		if( parentSystem->CanRemoveChild( line ) ) {
 			MoveCaretLeft();
+			MoveCaretLeft();
+			MoveCaretLeft();
 		}
 
 		next = parentSystem->TryRemoveChild( line );
@@ -329,7 +331,7 @@ bool CEquationPresenter::isRightDirection( const IBaseExprModel* model1, const I
 		model1 = model1->GetParent().lock().get();
 		model2 = model2->GetParent().lock().get();
 	}
-	int first, second;
+	int first = 0, second = 0;
 	int i = 0;
 	auto children = model1->GetParent().lock()->GetChildren();
 	for( auto it = children.begin(); it != children.end(); ++it, ++i ) {
