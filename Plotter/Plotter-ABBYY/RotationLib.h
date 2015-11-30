@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <exception>
+#include <cmath>
 #define M_PI       3.1415926535897932384
 
 class Matrix3D;
@@ -9,14 +10,14 @@ public:
 	Vector();
 	Vector( double inputX, double inputY, double inputZ );
 	void initialize( double inputX, double inputY, double inputZ );
-	void operator =( const Vector& vect );
 	void normalize();
+	void operator =( const Vector& vect );
 	Vector operator -() {return Vector(-this->x, -this->y, -this->z);}
 	friend Vector operator + (const Vector v1, const Vector v2) {return Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);}
 	double dot(Vector b) {return x*b.x + y*b.y + x*b.z;}
 	Vector cross(Vector a);
-	double norm(unsigned int p = 2) { return pow(pow(x, p) + pow(y, p) + pow(z, p), 1 / p); }
-	Vector normalize() { return *this*(1 / this->norm());}
+	double norm() { return sqrt(x*x + y*y + z*z);}
+	Vector to_normal() { return *this*(1 / this->norm());}
 	friend Vector operator * (Matrix3D mat, Vector vec);
 	friend Vector operator * (Vector vec, Matrix3D mat);
 	friend Vector operator * (Vector vec, double alpha);
