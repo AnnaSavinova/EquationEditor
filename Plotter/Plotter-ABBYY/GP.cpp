@@ -205,26 +205,6 @@ void GP::recalculateOrigin(double xShift, double yShift, double zShift) {
 		z.second * zShift);
 }
 
-std::pair<double, double> GP::CalculateRelativePoint(double xValue, double yValue, double zValue) {
-	std::pair<double, double> x = getAxisVectorVisual(0);
-	std::pair<double, double> y = getAxisVectorVisual(1);
-	std::pair<double, double> z = getAxisVectorVisual(2);
-
-	double xRel = origin.first + scale * (x.first * xValue * lengthOfSection +
-		y.first * yValue * lengthOfSection +
-		z.first * zValue * lengthOfSection);
-
-	double yRel = origin.second + scale * (x.second * xValue  * lengthOfSection +
-		y.second * yValue * lengthOfSection +
-		z.second * zValue * lengthOfSection);
-
-	return std::pair<double, double>(xRel, yRel);
-}
-
-void GP::MoveOrigin(const std::pair<double, double >& newOrigin) {
-	origin = newOrigin;
-}
-
 void GP::calculateRelativePoints()
 {
 	std::pair<double, double> x = getAxisVectorVisual( 0 );
