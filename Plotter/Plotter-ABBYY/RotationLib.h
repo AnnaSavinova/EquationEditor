@@ -12,18 +12,19 @@ public:
 	void initialize( double inputX, double inputY, double inputZ );
 	void normalize();
 	void operator =( const Vector& vect );
-	Vector operator -() {return Vector(-this->x, -this->y, -this->z);}
-	friend Vector operator + (const Vector v1, const Vector v2) {return Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);}
-	double dot(Vector b) {return x*b.x + y*b.y + x*b.z;}
-	Vector cross(Vector a);
-	double norm() { return sqrt(x*x + y*y + z*z);}
-	Vector to_normal() { return *this*(1 / this->norm());}
-	friend Vector operator * (Matrix3D mat, Vector vec);
-	friend Vector operator * (Vector vec, Matrix3D mat);
-	friend Vector operator * (Vector vec, double alpha);
-	friend Vector operator * (double alpha, Vector vec);
-	friend double operator * (Vector a, Vector b);
-	friend Vector operator ^ (Vector a, Vector b);
+	Vector operator -() {return Vector(-x, -y, -z);}
+	friend Vector operator + (const Vector& v1, const Vector& v2) {return Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);}
+	double dot(const Vector& b) const {return x*b.x + y*b.y + x*b.z;}
+	Vector cross(const Vector& a) const;
+	double norm() const { return sqrt(x*x + y*y + z*z);}
+	Vector to_normal() const { return *this*(1 / norm());}
+	friend Vector operator * (const Matrix3D& mat, const Vector& vec);
+	friend Vector operator * (const Vector& vec, const Matrix3D& mat);
+	friend Vector operator * (const Vector& vec, double alpha);
+	friend Vector operator * (double alpha, const Vector& vec);
+	friend double operator * (const Vector& a, const Vector& b);
+	friend Vector operator ^ (const Vector& a, const Vector& b);
+
 	double x;
 	double y;
 	double z;
@@ -52,7 +53,7 @@ class Matrix3D {
 public:
 	Matrix3D() {};
 	~Matrix3D() {};
-	Matrix3D(Vector a, Vector b, Vector c, bool are_lines = true);
+	Matrix3D(const Vector& a, const Vector& b, const Vector& c, bool are_lines = true);
 	Matrix3D(const Matrix3D& copy) {
 		for (int i = 0; i < 3; ++i)
 			for (int j = 0; j < 3; ++j)
@@ -63,14 +64,14 @@ public:
 
 	double getValue(int i, int j) const;
 
-	Matrix3D getInversed();
+	Matrix3D getInversed() const;
 
-	Matrix3D transpose();
+	Matrix3D transpose() const;
 
-	//Vector mult(Vector vec);
+	//Vector mult(const Vector& vec);
 
-	friend Vector operator * (Matrix3D mat, Vector vec);
-	friend Vector operator * (Vector vec, Matrix3D mat);
+	friend Vector operator * (const Matrix3D& mat, const Vector& vec);
+	friend Vector operator * (const Vector& vec, const Matrix3D& mat);
 
 	static Matrix3D I() {
 		return Matrix3D(Vector(1, 0, 0), Vector(0, 1, 0), Vector(0, 0, 1));

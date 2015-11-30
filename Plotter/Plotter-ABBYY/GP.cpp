@@ -134,17 +134,17 @@ double GP::GetLengthOfSection() {
 	return lengthOfSection;
 }
 
+void GP::rotateToCurrentAngle()
+{
+	relativeAxis = prevRelativeAxis;
+}
+
 void GP::rotateToStartAngle()
 {
 	prevRelativeAxis = relativeAxis;
 	relativeAxis[0] = Vector( 1, 0, 0 );
 	relativeAxis[1] = Vector( 0, 1, 0 );
 	relativeAxis[2] = Vector( 0, 0, 1 );
-}
-
-void GP::rotateToCurrentAngle()
-{
-	relativeAxis = prevRelativeAxis;
 }
 
 void GP::moveAlongVector(Vector v) {
