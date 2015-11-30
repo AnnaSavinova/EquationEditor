@@ -29,12 +29,16 @@ public:
 	void moveAlongY( double shift );
 	// Смещение по оси Z
 	void moveAlongZ( double shift );
+	//Смещение вдоль вектора
+	void moveAlongVector(Vector v);
 	// изменяет масштаб
 	void changeScale( int num );
 	// Возвращает положение относительных точек
 	std::vector<std::vector< std::vector< std::pair<double, double> >>> getRelativePoints();
 	// возвращает направляющий вектор Номера осей X - 0, Y - 1, Z - 2
 	std::pair<double, double> getAxisVector( int axisNum ) const;
+	// возвращает оконные векторы влево и вверх в системе xyz
+	std::pair<Vector, Vector> getLeftAndUpVectors();
 	// возвращает направляющий вектор в подстроенный под ориентацию WinApi
 	std::pair<double, double> getAxisVectorVisual( int axisNum ) const;
 	// возвращает координаты пересечения осей в 2d

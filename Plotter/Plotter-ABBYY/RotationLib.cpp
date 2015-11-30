@@ -85,3 +85,137 @@ Quaternion Quaternion::operator *( const Quaternion& quat ) {
 	q.z = w * quat.z + x * quat.y - y * quat.x + z * quat.w;
 	return q;
 } 
+
+Matrix3D::Matrix3D(Vector a, Vector b, Vector c, bool are_lines) {
+	if (are_lines) {
+		mat[0][0] = a.x;
+		mat[0][1] = a.y;
+		mat[0][2] = a.z;
+		mat[1][0] = b.x;
+		mat[1][1] = b.y;
+		mat[1][2] = b.z;
+		mat[2][0] = c.x;
+		mat[2][1] = c.y;
+		mat[2][2] = c.z;
+	}
+	else {
+		mat[0][0] = a.x;
+		mat[1][0] = a.y;
+		mat[2][0] = a.z;
+		mat[0][1] = b.x;
+		mat[1][1] = b.y;
+		mat[2][1] = b.z;
+		mat[0][2] = c.x;
+		mat[1][2] = c.y;
+		mat[2][2] = c.z;
+	}
+}
+
+void Matrix3D::setValue(int i, int j, double value) {
+	if (i < 3 && j < 3 && i > 0 && j > 0) {
+		mat[i][j] = value;
+		return;
+	}
+	throw std::exception("Index error");
+}
+
+double Matrix3D::getValue(int i, int j) const {
+	if (i < 3 && j < 3 && i > 0 && j > 0) {
+		return mat[i][j];
+	}
+	throw std::exception("Index error");
+}
+
+Matrix3D Matrix3D::getInversed() {
+	Matrix3D result;
+
+	double det = mat[0][0] * (mat[1][1] * mat[2][2] - mat[2][1] * mat[1][2]) -
+		mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0]) +
+		mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]);
+
+	double invdet = 1 / det;
+
+	result.mat[0][ 0] = (mat[1][ 1] * mat[2][ 2] - mat[2][ 1] * mat[1][ 2]) * invdet;
+	result.mat[0][ 1] = (mat[0][ 2] * mat[2][ 1] - mat[0][ 1] * mat[2][ 2]) * invdet;
+	result.mat[0][ 2] = (mat[0][ 1] * mat[1][ 2] - mat[0][ 2] * mat[1][ 1]) * invdet;
+	result.mat[1][ 0] = (mat[1][ 2] * mat[2][ 0] - mat[1][ 0] * mat[2][ 2]) * invdet;
+	result.mat[1][ 1] = (mat[0][ 0] * mat[2][ 2] - mat[0][ 2] * mat[2][ 0]) * invdet;
+	result.mat[1][ 2] = (mat[1][ 0] * mat[0][ 2] - mat[0][ 0] * mat[1][ 2]) * invdet;
+	result.mat[2][ 0] = (mat[1][ 0] * mat[2][ 1] - mat[2][ 0] * mat[1][ 1]) * invdet;
+	result.mat[2][ 1] = (mat[2][ 0] * mat[0][ 1] - mat[0][ 0] * mat[2][ 1]) * invdet;
+	result.mat[2][ 2] = (mat[0][ 0] * mat[1][ 1] - mat[1][ 0] * mat[0][ 1]) * invdet;
+
+	return result;
+}
+
+Matrix3D Matrix3D::transpose() {
+	Matrix3D result;
+
+	result.mat[0][0] = mat[0][0];
+	result.mat[0][1] = mat[1][0];
+	result.mat[0][2] = mat[2][0];
+	result.mat[1][0] = mat[1][1];
+	result.mat[1][1] = mat[2][1];
+	result.mat[1][2] = mat[3][1];
+	result.mat[2][0] = mat[1][2];
+	result.mat[2][1] = mat[2][2];
+	result.mat[2][2] = mat[3][2];
+
+	return result;
+}
+
+/*Vector Matrix3D::mult(Vector vec) {
+	Vector result;
+	result.x = mat[0][0] * vec.x + mat[0][1] * vec.y + mat[0][2] * vec.z;
+	result.y = mat[1][0] * vec.x + mat[1][1] * vec.y + mat[1][2] * vec.z;
+	result.z = mat[2][0] * vec.x + mat[2][1] * vec.y + mat[2][2] * vec.z;
+	return result;
+}*/
+
+Vector operator * (Matrix3D mat, Vector vec) {
+	Vector result;
+	result.x = mat.mat[0][0] * vec.x + mat.mat[0][1] * vec.y + mat.mat[0][2] * vec.z;
+	result.y = mat.mat[1][0] * vec.x + mat.mat[1][1] * vec.y + mat.mat[1][2] * vec.z;
+	result.z = mat.mat[2][0] * vec.x + mat.mat[2][1] * vec.y + mat.mat[2][2] * vec.z;
+	return result;
+}
+
+Vector operator * (Vector vec, Matrix3D mat) {
+	Vector result;
+	result.x = mat.mat[0][0] * vec.x + mat.mat[1][0] * vec.y + mat.mat[2][0] * vec.z;
+	result.y = mat.mat[0][1] * vec.x + mat.mat[1][1] * vec.y + mat.mat[2][1] * vec.z;
+	result.z = mat.mat[0][2] * vec.x + mat.mat[1][2] * vec.y + mat.mat[2][2] * vec.z;
+	return result;
+}
+
+Vector operator * (Vector vec, double alpha) {
+	Vector result;
+	result.x = alpha * vec.x;
+	result.y = alpha * vec.y;
+	result.z = alpha * vec.z;
+	return result;
+}
+
+Vector operator * (double alpha, Vector vec) {
+	Vector result;
+	result.x = alpha * vec.x;
+	result.y = alpha * vec.y;
+	result.z = alpha * vec.z;
+	return result;
+}
+
+Vector Vector::cross(Vector a) {
+	Vector result;
+	result.x = a.y * z - y * a.z;
+	result.y = a.z * x - z * a.x;
+	result.z = a.x * y - x * a.y;
+	return result;
+}
+
+Vector operator ^ (Vector a, Vector b) {
+	return a.cross(b);
+}
+
+double operator * (Vector a, Vector b) {
+	return a.dot(b);
+}

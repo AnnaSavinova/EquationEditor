@@ -82,6 +82,26 @@ std::vector<std::vector<std::vector<std::pair<double, double>>>> GP::getRelative
 	return relativePoints;
 }
 
+std::pair<Vector, Vector> GP::getLeftAndUpVectors() {
+	std::pair<double, double> x = getAxisVectorVisual(0);
+	std::pair<double, double> y = getAxisVectorVisual(1);
+	std::pair<double, double> z = getAxisVectorVisual(2);
+	
+	Vector a(x.first, y.first, z.first);
+	Vector b(x.second, y.second, z.second);
+	Vector c = a^b;
+	
+	Matrix3D transform = Matrix3D(a, b, c, true);
+	Matrix3D backTransform = transform.getInversed();
+
+	Vector horizontal(1, 0, 0);
+	Vector vertical(0, 1, 0);
+
+	Vector left = backTransform*horizontal*3;//relativeAxis[0];
+	Vector up = backTransform*vertical*3;//relativeAxis[1];
+	return std::pair<Vector, Vector>(left, up);
+}
+
 // возвращает направляющий вектор относительной( подвижной ) системы отсчета. Номера осей X - 0, Y - 1, Z - 2
 std::pair<double, double> GP::getAxisVector( int axisNum ) const
 {
@@ -92,7 +112,7 @@ std::pair<double, double> GP::getAxisVector( int axisNum ) const
 	double y1 = sin( M_PI * anglesOfAxis[1] / 180 );
 	double x2 = cos( M_PI * anglesOfAxis[2] / 180 );
 	double y2 = sin( M_PI * anglesOfAxis[2] / 180 );
-	// пересчитываем координаты осей относительной( подвижной ) системы отсчета в 2D, используя координаты неподвижной системы
+	// пересчитываем координаты осей относительной (подвижной) системы отсчета в 2D, используя координаты неподвижной системы
 	double relX = x0 * relativeAxis[axisNum].x + x1 * relativeAxis[axisNum].y + x2 * relativeAxis[axisNum].z;
 	double relY = y0 * relativeAxis[axisNum].x + y1 * relativeAxis[axisNum].y + y2 * relativeAxis[axisNum].z;
 	return std::pair<double, double>( scale * relX, scale * relY );
@@ -121,6 +141,11 @@ void GP::rotateToStartAngle()
 void GP::rotateToCurrentAngle()
 {
 	relativeAxis = prevRelativeAxis;
+}
+
+void GP::moveAlongVector(Vector v) {
+	recalculateOrigin(v.x, v.y, v.z);
+	calculateRelativePoints();
 }
 
 void GP::moveAlongX( double shift )

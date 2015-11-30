@@ -147,19 +147,19 @@ void GraphWindow::OnKeyDown(WPARAM wParam) {
 		break;
 	// D key
 	case 0x44:
-		graphInPoints.moveAlongX( graphInPoints.GetLengthOfSection() );
+		graphInPoints.moveAlongVector(graphInPoints.getLeftAndUpVectors().first);
 		break;
 	// A key
 	case 0x41:
-		graphInPoints.moveAlongX( -graphInPoints.GetLengthOfSection() );
+		graphInPoints.moveAlongVector(-graphInPoints.getLeftAndUpVectors().first);
 		break;
 	// W key
 	case 0x57:
-		graphInPoints.moveAlongY( graphInPoints.GetLengthOfSection() );
+		graphInPoints.moveAlongVector(graphInPoints.getLeftAndUpVectors().second);
 		break;
 	// S key
 	case 0x53:
-		graphInPoints.moveAlongY( -graphInPoints.GetLengthOfSection() );
+		graphInPoints.moveAlongVector(-graphInPoints.getLeftAndUpVectors().second);
 		break;
 	default:
 		return;
