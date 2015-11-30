@@ -41,32 +41,36 @@ void GP::turnLeft()
 	if( calc.Is2D() ) {
 		moveAlongX( -1 );
 	} else {
-		turnAroundAxis( 2, -1 );
+		turnRoundVector( 2, getLeftAndUpVectors().second);
 	}
+	calculateRelativePoints();
 }
 void GP::turnRight()
 {
 	if( calc.Is2D() ) {
 		moveAlongX( 1 );
 	} else {
-		turnAroundAxis( 2, 1 );
+		turnRoundVector( -2, getLeftAndUpVectors().second);
 	}
+	calculateRelativePoints();
 }
 void GP::turnUp()
 {
 	if( calc.Is2D() ) {
 		moveAlongZ( 1 );
 	} else {
-		turnAroundAxis( 1, 1 );
+		turnRoundVector( 2, getLeftAndUpVectors().first);
 	}
+	calculateRelativePoints();
 }
 void GP::turnDown()
 {
 	if( calc.Is2D() ) {
 		moveAlongZ( -1 );
 	} else {
-		turnAroundAxis( 1, -1 );
+		turnRoundVector(-2, getLeftAndUpVectors().first);
 	}
+	calculateRelativePoints();
 }
 
 void GP::turnRoundVector( int angle, Vector vector )
@@ -97,8 +101,8 @@ std::pair<Vector, Vector> GP::getLeftAndUpVectors() {
 	Vector horizontal(1, 0, 0);
 	Vector vertical(0, 1, 0);
 
-	Vector left = backTransform*horizontal*3;//relativeAxis[0];
-	Vector up = backTransform*vertical*3;//relativeAxis[1];
+	Vector left = backTransform*horizontal*3;
+	Vector up = backTransform*vertical*3;
 	return std::pair<Vector, Vector>(left, up);
 }
 
