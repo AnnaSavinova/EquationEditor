@@ -1,6 +1,7 @@
 ﻿#include <vector>
 #include <Windowsx.h>
 #include <sstream>
+#include <cmath>
 #include "resource.h"
 #include "graphWindow.h"
 
@@ -18,7 +19,10 @@ GraphWindow::GraphWindow(int width, int height, const wchar_t* formulaPath, bool
 	windowHeight(height),
 	is2D(is2D),
 	graphInPoints( formulaPath, is2D, 40 ),
-	needToFillPolygons( isFillPolygonsIf3D )
+	needToFillPolygons( isFillPolygonsIf3D ),
+	cameraX(0),
+	cameraY(0),
+	cameraZ(0)
 {
 }
 
@@ -310,6 +314,11 @@ void GraphWindow::OnImageSave() {
 	}
 }
 
+void InitEdit(HWND hwndDlg, int edit_id) {
+	HWND hEdit = GetDlgItem(hwndDlg, edit_id);
+	::SetWindowText(hEdit, (LPCWSTR)"0");
+}
+
 void GraphWindow::OnSetPosition() {
 	if (is2D) {
 		setPositionDialogHandle = ::CreateDialog(::GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG1), handle, dialogProc2D);
@@ -319,6 +328,13 @@ void GraphWindow::OnSetPosition() {
 
 	if (setPositionDialogHandle == NULL) {
 		::MessageBox(handle, L"CreateDialog returned NULL", L"Warning!", MB_OK | MB_ICONINFORMATION);
+	}
+
+	InitEdit(setPositionDialogHandle, IDC_EDIT1);
+	InitEdit(setPositionDialogHandle, IDC_EDIT2);
+
+	if (!is2D) {
+		InitEdit(setPositionDialogHandle, IDC_EDIT3);
 	}
 
 	::ShowWindow(setPositionDialogHandle, cmdShow);
@@ -335,7 +351,7 @@ double GetDouble(const std::wstring& input) {
 	return parsed;
 }
 
-double GetEditValue(HWND hwndDlg, int edit_id ) {
+double GetEditValue(HWND hwndDlg, int edit_id) {
 	HWND hEdit = GetDlgItem(hwndDlg, edit_id);
 
 	LRESULT length = ::SendMessage(hEdit, WM_GETTEXTLENGTH, 0, 0);
@@ -359,12 +375,12 @@ void DeleteSymbolFromEdit(HWND hwndDlg, int edit_id) {
 		return;
 	}
 
-	TCHAR *bufferX = new TCHAR[length + 1];
-	::SendMessage(hEdit, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
-
 	int firstPosition = 0;
 	int secondPosition = 0;
 	::SendMessage(hEdit, EM_GETSEL, (WPARAM)&firstPosition, (WPARAM)&secondPosition);
+
+	TCHAR *bufferX = new TCHAR[length + 1];
+	::SendMessage(hEdit, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
 
 	std::wstring str = std::wstring(bufferX);
 	::DeleteObject(hEdit);
@@ -377,7 +393,7 @@ void DeleteSymbolFromEdit(HWND hwndDlg, int edit_id) {
 }
 
 BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
+	GraphWindow* that = reinterpret_cast< GraphWindow* >(::GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
 
 	switch (message) {
 	case WM_CLOSE:
@@ -398,12 +414,6 @@ BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lP
 			catch (std::invalid_argument e) {
 				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT2);
 			}
-			try {
-				GetEditValue(hwndDlg, IDC_EDIT3);
-			}
-			catch (std::invalid_argument e) {
-				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT3);
-			}
 		}
 		}
 		switch (LOWORD(wParam)) {
@@ -423,7 +433,7 @@ BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lP
 }
 
 BOOL __stdcall dialogProc3D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
+	GraphWindow* that = reinterpret_cast< GraphWindow* >(::GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
 
 	switch (message) {
 	case WM_CLOSE:
@@ -508,9 +518,13 @@ void GraphWindow::OnPaint()
 }
 
 void GraphWindow::SetPosition(double newX, double newY, double newZ) {
-	graphInPoints.moveAlongX(newX);
-	graphInPoints.moveAlongY(newY);
-	graphInPoints.moveAlongZ(newZ);
+	graphInPoints.moveAlongX(cameraX - newX);
+	graphInPoints.moveAlongY(cameraY - newY);
+	graphInPoints.moveAlongZ(cameraZ - newZ);
+
+	cameraX = newX;
+	cameraY = newY;
+	cameraZ = newZ;
 
 	::InvalidateRect( handle, NULL, FALSE );
 	::UpdateWindow(handle);
@@ -697,9 +711,11 @@ void GraphWindow::drawAxis(HDC dc, int axisNum, RECT rec, const std::string axis
 
 void GraphWindow::drawCoordinates(HDC dc, int axisNum, double maxValue, int pointsCount) {
 	double axisScaleCoordUnit = maxValue / pointsCount;
+
+	std::pair<double, double> projectionCoord;
+
 	std::string text;
 	double axisScaleCoord = 0;
-	std::pair<double, double> projectionCoord;
 	for (int i = 0; i < pointsCount - 1; ++i) {
 		axisScaleCoord += axisScaleCoordUnit;
 		text = std::to_string(axisScaleCoord);

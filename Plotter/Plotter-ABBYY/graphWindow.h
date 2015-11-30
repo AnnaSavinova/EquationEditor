@@ -46,6 +46,10 @@ private:
 	int prevMousePosY;
 	bool isInClickMode = false;
 
+	double cameraX;
+	double cameraY;
+	double cameraZ;
+
 	int windowWidth;
 	int windowHeight;
 	bool is2D;
