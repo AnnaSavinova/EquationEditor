@@ -1,5 +1,6 @@
 ﻿#include <vector>
 #include <Windowsx.h>
+#include <sstream>
 #include "resource.h"
 #include "graphWindow.h"
 
@@ -312,61 +313,103 @@ void GraphWindow::OnImageSave() {
 void GraphWindow::OnSetPosition() {
 	if (is2D) {
 		setPositionDialogHandle = ::CreateDialog(::GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG1), handle, dialogProc2D);
-	}
-	else {
+	} else {
 		setPositionDialogHandle = ::CreateDialog(::GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG2), handle, dialogProc3D);
-
-		HWND hEditZ = GetDlgItem(setPositionDialogHandle, IDC_EDIT3);
-		::SetWindowText(hEditZ, (LPCWSTR)"0");
-		::DeleteObject(hEditZ);
 	}
 
 	if (setPositionDialogHandle == NULL) {
 		::MessageBox(handle, L"CreateDialog returned NULL", L"Warning!", MB_OK | MB_ICONINFORMATION);
 	}
 
-	HWND hEditX = GetDlgItem(setPositionDialogHandle, IDC_EDIT1);
-	HWND hEditY = GetDlgItem(setPositionDialogHandle, IDC_EDIT2);
-
-	::SetWindowText(hEditX, (LPCWSTR)"0");
-	::SetWindowText(hEditY, (LPCWSTR)"0" );
-
-	::DeleteObject(hEditX);
-	::DeleteObject(hEditY);
-
 	::ShowWindow(setPositionDialogHandle, cmdShow);
 }
 
+double GetDouble(const std::wstring& input) {
+	std::wistringstream iss(input);
+	double parsed;
+
+	if (!(iss >> parsed) || !(iss >> std::ws && iss.eof())) {
+		throw std::invalid_argument("not double");
+	}
+
+	return parsed;
+}
+
+double GetEditValue(HWND hwndDlg, int edit_id ) {
+	HWND hEdit = GetDlgItem(hwndDlg, edit_id);
+
+	LRESULT length = ::SendMessage(hEdit, WM_GETTEXTLENGTH, 0, 0);
+	TCHAR *bufferX = new TCHAR[length + 1];
+	::SendMessage(hEdit, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
+
+	std::wstring input = std::wstring(bufferX);
+	::DeleteObject(hEdit);
+	delete[] bufferX;
+
+	return GetDouble(input);
+}
+
+void DeleteSymbolFromEdit(HWND hwndDlg, int edit_id) {
+	HWND hEdit = GetDlgItem(hwndDlg, edit_id);
+
+	LRESULT length = ::SendMessage(hEdit, WM_GETTEXTLENGTH, 0, 0);
+
+	if (length == 0) {
+		::SetWindowText(hEdit, (LPCWSTR)"0");
+		return;
+	}
+
+	TCHAR *bufferX = new TCHAR[length + 1];
+	::SendMessage(hEdit, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
+
+	int firstPosition = 0;
+	int secondPosition = 0;
+	::SendMessage(hEdit, EM_GETSEL, (WPARAM)&firstPosition, (WPARAM)&secondPosition);
+
+	std::wstring str = std::wstring(bufferX);
+	::DeleteObject(hEdit);
+	delete[] bufferX;
+
+	str = str.substr(0, secondPosition - 1) + str.substr(secondPosition, length - 1);
+
+	::SendMessage(hEdit, WM_SETTEXT, (WPARAM)length - 1, (LPARAM)str.c_str());
+	::SendMessage(hEdit, EM_SETSEL, (WPARAM)(secondPosition - 1), (LPARAM)(secondPosition - 1));
+}
+
 BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(GetParent(hwndDlg), GWL_USERDATA));
+	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
 
 	switch (message) {
 	case WM_CLOSE:
 		::DestroyWindow(hwndDlg);
 		return TRUE;
 	case WM_COMMAND:
+		switch (HIWORD(wParam)) {
+		case EN_CHANGE: {
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT1);
+			}
+			catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT1);
+			}
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT2);
+			}
+			catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT2);
+			}
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT3);
+			}
+			catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT3);
+			}
+		}
+		}
 		switch (LOWORD(wParam)) {
 		case IDOK:
 		{
-			HWND hEditX = GetDlgItem(hwndDlg, IDC_EDIT1);
-			HWND hEditY = GetDlgItem(hwndDlg, IDC_EDIT2);
-
-			LRESULT length = ::SendMessage(hEditX, WM_GETTEXTLENGTH, 0, 0);
-			TCHAR *bufferX = new TCHAR[length + 1];
-			::SendMessage(hEditX, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
-
-			length = ::SendMessage(hEditY, WM_GETTEXTLENGTH, 0, 0);
-			TCHAR *bufferY = new TCHAR[length + 1];
-			::SendMessage(hEditY, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferY);
-
-			that->SetPosition(std::wcstold(bufferX, NULL), std::wcstold(bufferY, NULL), 0);
-
-			::DeleteObject(hEditX);
-			::DeleteObject(hEditY);
-
-			delete[] bufferX;
-			delete[] bufferY;
-
+			that->SetPosition(GetEditValue(hwndDlg, IDC_EDIT1), 0, GetEditValue(hwndDlg, IDC_EDIT2));
 			::DestroyWindow(hwndDlg);
 			return TRUE;
 		}
@@ -380,41 +423,38 @@ BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lP
 }
 
 BOOL __stdcall dialogProc3D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(GetParent(hwndDlg), GWL_USERDATA));
+	GraphWindow* that = reinterpret_cast< GraphWindow* >(GetWindowLong(::GetParent(hwndDlg), GWL_USERDATA));
 
 	switch (message) {
 	case WM_CLOSE:
 		::DestroyWindow(hwndDlg);
 		return TRUE;
 	case WM_COMMAND:
+		switch (HIWORD(wParam)) {
+		case EN_CHANGE: {
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT1);
+			} catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT1);
+			}
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT2);
+			} catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT2);
+			}
+			try {
+				GetEditValue(hwndDlg, IDC_EDIT3);
+			} catch (std::invalid_argument e) {
+				DeleteSymbolFromEdit(hwndDlg, IDC_EDIT3);
+			}
+		}
+		}
 		switch (LOWORD(wParam)) {
 		case IDOK:
 		{
-			HWND hEditX = GetDlgItem(hwndDlg, IDC_EDIT1);
-			HWND hEditY = GetDlgItem(hwndDlg, IDC_EDIT2);
-			HWND hEditZ = GetDlgItem(hwndDlg, IDC_EDIT3);
-
-			LRESULT length = ::SendMessage(hEditX, WM_GETTEXTLENGTH, 0, 0);
-			TCHAR *bufferX = new TCHAR[length + 1];
-			::SendMessage(hEditX, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferX);
-
-			length = ::SendMessage(hEditY, WM_GETTEXTLENGTH, 0, 0);
-			TCHAR *bufferY = new TCHAR[length + 1];
-			::SendMessage(hEditY, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferY);
-
-			length = ::SendMessage(hEditZ, WM_GETTEXTLENGTH, 0, 0);
-			TCHAR *bufferZ = new TCHAR[length + 1];
-			::SendMessage(hEditZ, WM_GETTEXT, (WPARAM)length + 1, (LPARAM)bufferZ);
-
-			that->SetPosition(std::wcstold(bufferX, NULL), std::wcstold(bufferY, NULL), std::wcstold(bufferZ, NULL));
-
-			::DeleteObject(hEditX);
-			::DeleteObject(hEditY);
-			::DeleteObject(hEditZ);
-
-			delete[] bufferX;
-			delete[] bufferY;
-			delete[] bufferZ;
+			that->SetPosition(GetEditValue(hwndDlg, IDC_EDIT1), 
+				GetEditValue(hwndDlg, IDC_EDIT2),
+				GetEditValue(hwndDlg, IDC_EDIT3));
 
 			::DestroyWindow(hwndDlg);
 			return TRUE;
@@ -468,9 +508,9 @@ void GraphWindow::OnPaint()
 }
 
 void GraphWindow::SetPosition(double newX, double newY, double newZ) {
-	std::pair<double, double> newOrigin = graphInPoints.CalculateRelativePoint(newX, newY, newZ);
-
-	graphInPoints.MoveOrigin(newOrigin);
+	graphInPoints.moveAlongX(newX);
+	graphInPoints.moveAlongY(newY);
+	graphInPoints.moveAlongZ(newZ);
 
 	::InvalidateRect( handle, NULL, FALSE );
 	::UpdateWindow(handle);

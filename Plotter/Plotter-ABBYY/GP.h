@@ -56,9 +56,6 @@ public:
 
 	std::pair<double, double> getMaxRelativePoint(std::pair<double, double>& axis, int top, int bottom, int left, int right);
 
-	std::pair<double, double> CalculateRelativePoint(double xValue, double yValue, double zValue);
-	void MoveOrigin(const std::pair<double, double >& newOrigin);
-
 private:
 	// Пересчет положения точек относительно осей
 	void calculateRelativePoints();
