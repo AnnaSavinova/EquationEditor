@@ -7,9 +7,7 @@
 
 class MathMlCalculator {
 public:
-	MathMlCalculator();
-
-	void SetParameters(const std::wstring& formula, bool _is2D);
+	MathMlCalculator(const std::wstring& formula, bool _is2D);
 
 	void RecalculatePoints();
 	void RecalculatePoints( int gridSize );

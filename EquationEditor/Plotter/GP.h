@@ -85,7 +85,7 @@ private:
 	std::pair<double, double> origin;
 
 	// Считает значения функции в конкретных точках
-	MathMlCalculator calc;
+	std::shared_ptr<MathMlCalculator> calc;
 
 	// длина отрезка сетки
 	double lengthOfSection;

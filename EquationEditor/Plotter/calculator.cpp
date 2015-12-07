@@ -8,19 +8,20 @@
 pugi::xml_document MathMlCalculator::doc;
 double MathMlCalculator::eps = 0.005;
 
-MathMlCalculator::MathMlCalculator()
+MathMlCalculator::MathMlCalculator(const std::wstring& formula, bool _is2D)
 {
-	pugi::xml_parse_result result = doc.load_file(L"Plotter/ex.xml");
-	buildFormulas(doc);
-	srand(time(NULL));
-}
-
-void MathMlCalculator::SetParameters(const std::wstring& formula, bool _is2D) {
 	is2D = _is2D;
 
-	std::wstringstream istring(formula);
-	pugi::xml_parse_result result = doc.load(istring);
-	buildFormulas(doc);
+	if (formula == L"") {
+		pugi::xml_parse_result result = doc.load_file(L"Plotter/exbig.xml");
+		buildFormulas(doc);
+	} else {
+		std::wstringstream istring(formula);
+		pugi::xml_parse_result result = doc.load(istring);
+		buildFormulas(doc);
+	}
+
+	srand(time(NULL));
 }
 
 void MathMlCalculator::RecalculatePoints()
@@ -187,7 +188,6 @@ void MathMlCalculator::buildFormulas( const pugi::xml_node& formulaRoot )
 		}
 	}
 }
-
 
 bool MathMlCalculator::buildCoordFormula(const pugi::xml_node& coordRoot) {
 	pugi::xml_node coordIdentNode = coordRoot.first_child().next_sibling();
