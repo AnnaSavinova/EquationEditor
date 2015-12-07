@@ -7,8 +7,7 @@
 const wchar_t* const CEquationEditorWindow::className = L"EquationEditorWindow";
 
 CEquationEditorWindow::CEquationEditorWindow() :
-	hwnd( nullptr ),
-	graphWindow(700, 700)
+	hwnd( nullptr )
 {
 	presenter = std::make_shared<CEquationPresenter>( *this );
 	isPressedShift = false;
@@ -119,10 +118,10 @@ void CEquationEditorWindow::OnLButtonDown( int xMousePos, int yMousePos )
 void CEquationEditorWindow::createPlotter() {
 	::EnableWindow(::GetParent(hwnd), false);
 
-	graphWindow.SetParameters(presenter->Serialize(), false, false);
+	graphWindow = std::make_shared<GraphWindow>(700, 700, presenter->Serialize(), true, false);
 
-	graphWindow.Create((HINSTANCE)::GetWindowLong(hwnd, GWL_HINSTANCE), cmdShow, ::GetParent(hwnd));
-	graphWindow.Show();
+	graphWindow->Create((HINSTANCE)::GetWindowLong(hwnd, GWL_HINSTANCE), cmdShow, ::GetParent(hwnd));
+	graphWindow->Show();
 }
 
 void CEquationEditorWindow::OnWmCommand( WPARAM wParam, LPARAM lParam )

@@ -11,10 +11,7 @@
 class GP {
 public:
 	// получает на вход точки, длину стороны сетки, и углы под которыми расположены оси по отношению к стандартному положению оси X(----->)
-	GP( double inputLengthOfSection = 5,
-		std::pair<double, double>& inputWindowSize = std::pair<double, double>( 700, 700 ) );
-
-	void SetParameters(const std::wstring& formula, bool is2D = false);
+	GP( int width, int height, const std::wstring& formula, bool is2D, double inputLengthOfSection = 40 );
 
 	// Повороты при нажатии на соответствующие кнопки на клавиатуре
 	void turnLeft();

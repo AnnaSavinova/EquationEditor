@@ -62,7 +62,7 @@ private:
 	HINSTANCE hInstance;
 	int cmdShow;
 
-	GraphWindow graphWindow;
+	std::shared_ptr<GraphWindow> graphWindow;
 
 	HWND hwnd;		// хэндл окна
 	HWND parent;  // хэндл родителя MainWindow 

@@ -3,31 +3,12 @@
 // Graph in Points
 // Данный класс предназначен для поточечного представления графика в зависимости от положения осей 
 // получает на вход точки, длину стороны сетки, и углы под которыми расположены оси по отношению к стандартному положению оси X(----->)
-GP::GP( double inputLengthOfSection, std::pair<double, double>& inputWindowSize ) :
+GP::GP(int width, int height, const std::wstring& formula, bool is2D, double inputLengthOfSection ) :
 	lengthOfSection( inputLengthOfSection ),
-	windowSize( inputWindowSize ),
+	windowSize( std::pair<double, double>(width, height) ),
 	scale( 1 )
 {
-	calc = std::make_shared<MathMlCalculator>(L"", false);
-	origin.first = windowSize.first / 2;
-	origin.second = windowSize.second / 2;
-	anglesOfAxis = calc->Is2D() ? std::vector<double>{0, 90, 90} : std::vector<double>{ -30, 40, 90 };
-	relativeAxis.resize( 3 );
-	relativeAxis[0] = Vector( 1, 0, 0 );
-	relativeAxis[1] = Vector( 0, 1, 0 );
-	relativeAxis[2] = Vector( 0, 0, 1 );
-	prevRelativeAxis = relativeAxis;
-
-	double size = (windowSize.first > windowSize.second) ? windowSize.first : windowSize.second;
-	calc->RecalculatePoints( 4 * (int) (size / lengthOfSection) );
-	calculateZcoordinates();
-
-	calculateRelativePoints();
-}
-
-void GP::SetParameters(const std::wstring& formula, bool is2D) {
 	calc = std::make_shared<MathMlCalculator>(formula, is2D);
-
 	origin.first = windowSize.first / 2;
 	origin.second = windowSize.second / 2;
 	anglesOfAxis = calc->Is2D() ? std::vector<double>{0, 90, 90} : std::vector<double>{ -30, 40, 90 };

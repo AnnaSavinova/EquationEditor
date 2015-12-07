@@ -10,7 +10,7 @@ struct CTriangle {
 
 class GraphWindow {
 public:
-	GraphWindow( int width, int height );
+	GraphWindow::GraphWindow(int width, int height, const std::wstring& formula, bool _is2D, bool _isFillPolygonsIf3D);
 
 	static bool RegisterClass(HINSTANCE hInstance);
 
@@ -19,8 +19,6 @@ public:
 	void Show();
 
 	HWND GetHandle();
-
-	void SetParameters(const std::wstring& formula, bool is2D = false, bool _isFillPolygonsIf3D = false);
 
 	void SetPosition(double newX, double newY, double newZ);
 

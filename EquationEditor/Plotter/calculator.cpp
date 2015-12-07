@@ -8,12 +8,11 @@
 pugi::xml_document MathMlCalculator::doc;
 double MathMlCalculator::eps = 0.005;
 
-MathMlCalculator::MathMlCalculator(const std::wstring& formula, bool _is2D)
+MathMlCalculator::MathMlCalculator(const std::wstring& formula, bool _is2D)	:
+	is2D(_is2D)
 {
-	is2D = _is2D;
-
 	if (formula == L"") {
-		pugi::xml_parse_result result = doc.load_file(L"Plotter/exbig.xml");
+		pugi::xml_parse_result result = doc.load_file(L"Plotter/ex.xml");
 		buildFormulas(doc);
 	} else {
 		std::wstringstream istring(formula);

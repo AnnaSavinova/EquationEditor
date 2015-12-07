@@ -14,22 +14,17 @@ const wchar_t* GraphWindow::nameWindow = L"GraphWindow";
 BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL __stdcall dialogProc3D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-GraphWindow::GraphWindow(int width, int height) :
+GraphWindow::GraphWindow(int width, int height, const std::wstring& formula, bool _is2D, bool _isFillPolygonsIf3D) :
 	handle( nullptr ),
 	windowWidth(width),
 	windowHeight(height),
-	is2D(is2D),
-	graphInPoints( 40 ),
+	is2D(_is2D),
+	graphInPoints( width, height, formula, _is2D, 40 ),
+	needToFillPolygons(_isFillPolygonsIf3D),
 	cameraX(0),
 	cameraY(0),
 	cameraZ(0)
 {
-}
-
-void GraphWindow::SetParameters(const std::wstring& formula, bool _is2D, bool _isFillPolygonsIf3D) {
-	is2D = _is2D;
-	graphInPoints.SetParameters(formula, is2D);
-	needToFillPolygons = _isFillPolygonsIf3D;
 }
 
 bool GraphWindow::RegisterClass(HINSTANCE hInstance) {
