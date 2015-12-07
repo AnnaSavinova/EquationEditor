@@ -11,9 +11,7 @@
 class GP {
 public:
 	// получает на вход точки, длину стороны сетки, и углы под которыми расположены оси по отношению к стандартному положению оси X(----->)
-	GP( const wchar_t* formulaPath,
-		bool is2D = false, double inputLengthOfSection = 5,
-		std::pair<double, double>& inputWindowSize = std::pair<double, double>( 700, 700 ) );
+	GP( int width, int height, const std::wstring& formula, bool is2D, double inputLengthOfSection = 40 );
 
 	// Повороты при нажатии на соответствующие кнопки на клавиатуре
 	void turnLeft();
@@ -84,7 +82,7 @@ private:
 	std::pair<double, double> origin;
 
 	// Считает значения функции в конкретных точках
-	MathMlCalculator calc;
+	std::shared_ptr<MathMlCalculator> calc;
 
 	// длина отрезка сетки
 	double lengthOfSection;

@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EquationEditor", "EquationE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mathNotationTranslation", "mathNotationTranslation\mathNotationTranslation\mathNotationTranslation.vcxproj", "{597F742F-0518-4300-9AFE-D282B8FC55D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Plotter-ABBYY", "Plotter\Plotter-ABBYY\Plotter-ABBYY.vcxproj", "{78B49263-5044-46CE-97C4-5C980276BE3B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Validator", "Validator\Validator\Validator.vcxproj", "{626EE9C2-22E7-4752-B163-14F2336B0FE9}"
 EndProject
 Global
@@ -33,12 +31,6 @@ Global
 		{597F742F-0518-4300-9AFE-D282B8FC55D5}.Release|Win32.Build.0 = Release|Win32
 		{597F742F-0518-4300-9AFE-D282B8FC55D5}.Release|x64.ActiveCfg = Release|x64
 		{597F742F-0518-4300-9AFE-D282B8FC55D5}.Release|x64.Build.0 = Release|x64
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Debug|Win32.Build.0 = Debug|Win32
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Debug|x64.ActiveCfg = Debug|Win32
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Release|Win32.ActiveCfg = Release|Win32
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Release|Win32.Build.0 = Release|Win32
-		{78B49263-5044-46CE-97C4-5C980276BE3B}.Release|x64.ActiveCfg = Release|Win32
 		{626EE9C2-22E7-4752-B163-14F2336B0FE9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{626EE9C2-22E7-4752-B163-14F2336B0FE9}.Debug|Win32.Build.0 = Debug|Win32
 		{626EE9C2-22E7-4752-B163-14F2336B0FE9}.Debug|x64.ActiveCfg = Debug|x64
