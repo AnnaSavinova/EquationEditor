@@ -316,7 +316,7 @@ void GraphWindow::OnImageSave() {
 
 void InitEdit(HWND hwndDlg, int edit_id) {
 	HWND hEdit = GetDlgItem(hwndDlg, edit_id);
-	::SetWindowText(hEdit, (LPCWSTR)"0");
+	::SetWindowText(hEdit, (LPCWSTR)"1");
 }
 
 void GraphWindow::OnSetPosition() {
@@ -371,7 +371,7 @@ void DeleteSymbolFromEdit(HWND hwndDlg, int edit_id) {
 	LRESULT length = ::SendMessage(hEdit, WM_GETTEXTLENGTH, 0, 0);
 
 	if (length == 0) {
-		::SetWindowText(hEdit, (LPCWSTR)"0");
+		::SetWindowText(hEdit, (LPCWSTR)"1");
 		return;
 	}
 

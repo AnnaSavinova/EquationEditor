@@ -41,7 +41,7 @@ void GP::turnLeft()
 	if( calc.Is2D() ) {
 		moveAlongX( -1 );
 	} else {
-		turnRoundVector( 2, getLeftAndUpVectors().second);
+		turnRoundVector( 5, getLeftAndUpVectors().second);
 	}
 	calculateRelativePoints();
 }
@@ -50,7 +50,7 @@ void GP::turnRight()
 	if( calc.Is2D() ) {
 		moveAlongX( 1 );
 	} else {
-		turnRoundVector( -2, getLeftAndUpVectors().second);
+		turnRoundVector( -5, getLeftAndUpVectors().second);
 	}
 	calculateRelativePoints();
 }
@@ -59,7 +59,7 @@ void GP::turnUp()
 	if( calc.Is2D() ) {
 		moveAlongZ( 1 );
 	} else {
-		turnRoundVector( 2, getLeftAndUpVectors().first);
+		turnRoundVector( 5, getLeftAndUpVectors().first);
 	}
 	calculateRelativePoints();
 }
