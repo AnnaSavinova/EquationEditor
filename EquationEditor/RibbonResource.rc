@@ -199,22 +199,6 @@ END
 ID_CMD_SAVE_LargeImages_RESID    BITMAP    "Res\\Save32.bmp" /* LargeImages ID_CMD_SAVE_LargeImages_RESID: (null) */
 STRINGTABLE 
 BEGIN
-    ID_EXEC_PLOT_LabelTitle_RESID L"\x041f\x043e\x0441\x0442\x0440\x043e\x0438\x0442\x044c" /* LabelTitle ID_EXEC_PLOT_LabelTitle_RESID: (null) */
-END
-
-STRINGTABLE 
-BEGIN
-    ID_EXEC_PLOT_LabelDescription_RESID L"\x041f\x043e\x0441\x0442\x0440\x043e\x0438\x0442\x044c" /* LabelDescription ID_EXEC_PLOT_LabelDescription_RESID: (null) */
-END
-
-STRINGTABLE 
-BEGIN
-    ID_EXEC_PLOT_TooltipDescription_RESID L"\x041f\x043e\x0441\x0442\x0440\x043e\x0438\x0442\x044c \x0433\x0440\x0430\x0444\x0438\x043a" /* TooltipDescription ID_EXEC_PLOT_TooltipDescription_RESID: (null) */
-END
-
-ID_EXEC_PLOT_LargeImages_RESID    BITMAP    "Res\\Save32.bmp" /* LargeImages ID_EXEC_PLOT_LargeImages_RESID: (null) */
-STRINGTABLE 
-BEGIN
     ID_CMD_TAB_MAIN_LabelTitle_RESID L"\x0413\x043b\x0430\x0432\x043d\x0430\x044f" /* LabelTitle ID_CMD_TAB_MAIN_LabelTitle_RESID: (null) */
 END
 

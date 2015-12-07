@@ -170,7 +170,7 @@ int CEditControlModel::getPrecedence(std::wstring operation) {
 	if (operation == L"<plus/>" || operation == L"<minus/>")
 		return 2;
 
-	if (operation == L"<times/>" || operation == L"<divided/>")
+	if (operation == L"<times/>" || operation == L"<divide/>")
 		return 3;
 
 	if (operation == L"<eq/>")
@@ -219,7 +219,7 @@ std::wstring CEditControlModel::ParseText() {
 					tmp = L"<times/>";
 					break;
 				case L'/':
-					tmp = L"<divided/>";
+					tmp = L"<divide/>";
 					break;
 				case L'=':
 					tmp = L"<eq/>";
