@@ -174,7 +174,7 @@ int CEditControlModel::getPrecedence(std::wstring operation) {
 		return 3;
 
 	if (operation == L"<eq/>")
-		return 4;
+		return 1;
 
 	return 0;
 }
