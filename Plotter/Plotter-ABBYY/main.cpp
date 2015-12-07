@@ -13,7 +13,13 @@ int _stdcall wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR comma
 
 	// first  bool - is2D
 	// second bool - isNeedToFillIf3D
-	GraphWindow mainWindow( 700, 700, L"./ex.xml", false, false );
+
+	LPWSTR *szArgList;
+	int argCount;
+
+	szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
+	GraphWindow mainWindow(700, 700, szArgList[1], false, false);
+	//GraphWindow mainWindow( 700, 700, L"./ex.xml", false, false ); // UNCOMMENT THIS LINE FOR SIMPLE DEMONSTRATION!!!
 
 	if( !mainWindow.Create( hInstance, nCmdShow ) ) {
 		return 1;

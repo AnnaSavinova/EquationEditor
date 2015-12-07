@@ -167,90 +167,115 @@ void CEditControlModel::MoveCaretRight( const IBaseExprModel* from, CCaret& care
 }
 
 int CEditControlModel::getPrecedence(std::wstring operation) {
-	if (operation == L">sulp/<" || operation == L">sunim/<")
+	if (operation == L"<plus/>" || operation == L"<minus/>")
 		return 2;
 
-	if (operation == L">semit/<" || operation == L">edivid/<")
+	if (operation == L"<times/>" || operation == L"<divided/>")
 		return 3;
 
-	if (operation == L">/qe<")
+	if (operation == L"<eq/>")
 		return 4;
+
+	return 0;
 }
 
 std::wstring CEditControlModel::Wrap(std::wstring &text, bool isNumber) {
 	if (text == L"")
 		return L"";
 	if (isNumber)
-		return L">nc<" + text + L">nc/<";
+		return L"<cn>" + text + L"</cn>\n";
 	else
-		return L">ic<" + text + L">/ic<";
+		return L"<ci>" + text + L"</ci>\n";
 }
 
 std::wstring CEditControlModel::ParseText() {
 	std::wstring result = L""; 
 	std::stack <std::wstring> operationStack;
+	std::wstring currentOp;
+	std::wstring tmp;
 
 	std::wstring currentWord = L"";
 	bool isNumber = true;
-	int i = params.text.length() - 1;
-	while (i >= 0) {
+	for (int i = 0; i < params.text.length(); ++i) {
+
 		if ((params.text[i] <= L'9') && (params.text[i] >= L'0') || (params.text[i] <= L'z') && (params.text[i] >= L'a')) {
 			currentWord += params.text[i];
 			isNumber = isNumber && (params.text[i] <= L'9') && (params.text[i] >= L'0');
-		}
-		else
-		{
-			result += Wrap(currentWord, isNumber);
-			currentWord = L"";
-			isNumber = true;
-		}
+		} else { //if sign
 
-		//это очень странно, но нужно для того, чтобы потом перевернуть строку в конце
-		if (operations.find(params.text[i]) != operations.end()) {
-			std::wstring tmp;
-			switch (params.text[i]) {
-			case L'+':
-				tmp = L">/sulp<";
-				break;
-			case L'-':
-				tmp = L">/sunim<";
-				break;
-			case L'*':
-				tmp = L">/semit<"; //SORRY IM REALLY SORRY
-				break;
-			case L'/':
-				tmp = L">/edivid<";
-				break;
-			case L'=':
-				tmp = L">/qe<";
-				break;
-			default:
-				break;
-			}
+			if (operations.find(params.text[i]) != operations.end()) {
+				operationStack.push(Wrap(currentWord, isNumber));
+				currentWord = L"";
+				isNumber = true;
 
-			while (!operationStack.empty() && (getPrecedence(operationStack.top()) <= getPrecedence(tmp)))
-			{
-				result += operationStack.top();
-				operationStack.pop();
+				switch (params.text[i]) {
+				case L'+':
+					tmp = L"<plus/>";
+					break;
+				case L'-':
+					tmp = L"<minus/>";
+					break;
+				case L'*':
+					tmp = L"<times/>";
+					break;
+				case L'/':
+					tmp = L"<divided/>";
+					break;
+				case L'=':
+					tmp = L"<eq/>";
+					break;
+				default:
+					break;
+				}
+
+				while (operationStack.size() >= 3 && (getPrecedence(currentOp) >= getPrecedence(tmp)))
+				{
+					std::wstring a = operationStack.top();
+					operationStack.pop();
+					std::wstring op = currentOp = operationStack.top();
+					operationStack.pop();
+					std::wstring b = operationStack.top();
+					operationStack.pop();
+
+					std::wstring temp = op + L"\n" + b + a;
+					ReplaceStringInPlace(temp, L"<", L"  <");
+					ReplaceStringInPlace(temp, L"  </cn", L"</cn");
+					operationStack.push(L"<apply>\n" + temp + L"</apply>\n");
+				}
+				currentOp = tmp;
+				operationStack.push(tmp);
 			}
-			operationStack.push(tmp);
 		}
-		i--;
-	};
+	} //end for
 
 	if (currentWord != L"")
-		result += Wrap(currentWord, isNumber);
+		operationStack.push(Wrap(currentWord, isNumber));
 
-	while (!operationStack.empty())
+	while (operationStack.size() >= 3 && (getPrecedence(currentOp) >= getPrecedence(tmp)))
 	{
-		result += operationStack.top();
+		std::wstring a = operationStack.top();
 		operationStack.pop();
+		std::wstring op = currentOp = operationStack.top();
+		operationStack.pop();
+		std::wstring b = operationStack.top();
+		operationStack.pop();
+
+		std::wstring temp = op + L"\n" + b + a;
+		ReplaceStringInPlace(temp, L"<", L"  <");
+		ReplaceStringInPlace(temp, L"  </cn", L"</cn");
+		operationStack.push(L"<apply>\n" + temp + L"</apply>\n");
 	}
 
-	//reverse the string
-	result = std::wstring(result.rbegin(), result.rend());
+	return operationStack.top();
+}
 
-	return result;
+void CEditControlModel::ReplaceStringInPlace(std::wstring& subject, const std::wstring& search,
+	const std::wstring& replace) {
+	size_t pos = 0;
+	while ((pos = subject.find(search, pos)) != std::wstring::npos) {
+		subject.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
 }
 
 bool CEditControlModel::IsEmpty() const {

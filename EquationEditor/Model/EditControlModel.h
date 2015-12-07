@@ -68,4 +68,7 @@ private:
 	std::wstring Wrap(std::wstring &text, bool isNumber);
 	std::vector<int> symbolsWidths;	// Ширина каждого символа
 	std::list< std::shared_ptr<IBaseExprModel> > children;	// Заглушка-пустой список
+
+	void ReplaceStringInPlace(std::wstring& subject, const std::wstring& search,
+		const std::wstring& replace);
 };

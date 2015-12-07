@@ -125,6 +125,16 @@
       </Command.LargeImages>
     </Command>
 
+    <Command Name="executePlotter"
+             Symbol="ID_EXEC_PLOT"
+             LabelTitle="Построить"
+             LabelDescription="Построить"
+             TooltipDescription="Построить график">
+      <Command.LargeImages>
+        <Image>Res/Save32.bmp</Image>
+      </Command.LargeImages>
+    </Command>    
+
     <Command Name="cmdTabMain"
              Symbol="ID_CMD_TAB_MAIN"
              LabelTitle="Главная">
