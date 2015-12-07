@@ -3,13 +3,12 @@
 // Graph in Points
 // Данный класс предназначен для поточечного представления графика в зависимости от положения осей 
 // получает на вход точки, длину стороны сетки, и углы под которыми расположены оси по отношению к стандартному положению оси X(----->)
-GP::GP( const wchar_t* formulaPath, bool is2D /*= false*/,
-	double inputLengthOfSection /*= 5*/, std::pair<double, double>& inputWindowSize /*= std::pair<double, double>( 700, 700 ) */ ) :
+GP::GP( double inputLengthOfSection, std::pair<double, double>& inputWindowSize ) :
 	lengthOfSection( inputLengthOfSection ),
 	windowSize( inputWindowSize ),
 	scale( 1 )
 {
-	calc = MathMlCalculator( formulaPath, is2D );
+	calc = MathMlCalculator();
 
 	origin.first = windowSize.first / 2;
 	origin.second = windowSize.second / 2;
@@ -25,6 +24,10 @@ GP::GP( const wchar_t* formulaPath, bool is2D /*= false*/,
 	calculateZcoordinates();
 
 	calculateRelativePoints();
+}
+
+void GP::SetParameters(const std::wstring& formula, bool is2D) {
+	calc.SetParameters(formula, is2D);
 }
 
 void GP::turnAroundAxis( int axisNumber, int angle )

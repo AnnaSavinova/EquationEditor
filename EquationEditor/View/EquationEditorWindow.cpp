@@ -1,10 +1,14 @@
 ﻿#include <Windowsx.h>
 #include "resource.h"
 #include "View/EquationEditorWindow.h"
+#include "Plotter/graphWindow.h"
+#include "MainWindow.h"
 
 const wchar_t* const CEquationEditorWindow::className = L"EquationEditorWindow";
 
-CEquationEditorWindow::CEquationEditorWindow() : hwnd( nullptr )
+CEquationEditorWindow::CEquationEditorWindow() :
+	hwnd( nullptr ),
+	graphWindow(700, 700)
 {
 	presenter = std::make_shared<CEquationPresenter>( *this );
 	isPressedShift = false;
@@ -41,8 +45,9 @@ bool CEquationEditorWindow::Create( HWND parent, RECT rect )
 		parent, nullptr, ::GetModuleHandle( nullptr ), this ) != 0;
 }
 
-void CEquationEditorWindow::Show( int cmdShow )
+void CEquationEditorWindow::Show( int _cmdShow )
 {
+	cmdShow = _cmdShow;
 	UpdateScrollbar();
 	::ShowWindow( hwnd, cmdShow );
 }
@@ -111,6 +116,15 @@ void CEquationEditorWindow::OnLButtonDown( int xMousePos, int yMousePos )
 	presenter->SetCaret( xMousePos, yMousePos );
 }
 
+void CEquationEditorWindow::createPlotter() {
+	::EnableWindow(::GetParent(hwnd), false);
+
+	graphWindow.SetParameters(presenter->Serialize(), false, false);
+
+	graphWindow.Create((HINSTANCE)::GetWindowLong(hwnd, GWL_HINSTANCE), cmdShow, ::GetParent(hwnd));
+	graphWindow.Show();
+}
+
 void CEquationEditorWindow::OnWmCommand( WPARAM wParam, LPARAM lParam )
 {
 	CCaret caret;
@@ -174,7 +188,7 @@ void CEquationEditorWindow::OnWmCommand( WPARAM wParam, LPARAM lParam )
 				presenter->AddControlView( PRODUCT );
 				break;
 			case ID_ADD_GRAPH:
-				
+				createPlotter();
 				break;
 			case ID_ADD_SYSTEM:
 				presenter->AddControlView( SYSTEM );

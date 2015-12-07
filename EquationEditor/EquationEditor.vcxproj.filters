@@ -28,6 +28,15 @@
     <Filter Include="Source Files\Model\Utils">
       <UniqueIdentifier>{d8c6bae1-ddd6-454c-8784-7f08866621e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PugiXML">
+      <UniqueIdentifier>{bb2a9e42-4b50-43cc-9662-c6878a8c0231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PlotterLogic">
+      <UniqueIdentifier>{569dfc28-ca64-44f8-9833-31af79b47cc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlotterLogic">
+      <UniqueIdentifier>{055e8db6-67a8-434f-8148-3bfd1a63ba5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -105,6 +114,24 @@
     <ClCompile Include="Model\BracesControlModel.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Plotter\pugixml\pugixml.cpp">
+      <Filter>PugiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Plotter\graphWindow.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Plotter\calculator.cpp">
+      <Filter>Source Files\PlotterLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="Plotter\GP.cpp">
+      <Filter>Source Files\PlotterLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="Plotter\Operation.cpp">
+      <Filter>Source Files\PlotterLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="Plotter\RotationLib.cpp">
+      <Filter>Source Files\PlotterLogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model\EditControlModel.h">
@@ -124,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="View\EquationEditorWindow.h">
       <Filter>Source Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\DegrControlModel.h">
       <Filter>Source Files\Model</Filter>
@@ -187,6 +211,30 @@
     </ClInclude>
     <ClInclude Include="Model\BracesControlModel.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\pugixml\pugiconfig.hpp">
+      <Filter>PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\pugixml\pugixml.hpp">
+      <Filter>PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\calculator.h">
+      <Filter>Header Files\PlotterLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\GP.h">
+      <Filter>Header Files\PlotterLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\Operation.h">
+      <Filter>Header Files\PlotterLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\RotationLib.h">
+      <Filter>Header Files\PlotterLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotter\graphWindow.h">
+      <Filter>Source Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

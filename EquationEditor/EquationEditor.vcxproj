@@ -98,6 +98,12 @@
     <ClCompile Include="Model\Utils\Caret.cpp" />
     <ClCompile Include="Model\Utils\Line.cpp" />
     <ClCompile Include="Model\Utils\Rect.cpp" />
+    <ClCompile Include="Plotter\calculator.cpp" />
+    <ClCompile Include="Plotter\GP.cpp" />
+    <ClCompile Include="Plotter\graphWindow.cpp" />
+    <ClCompile Include="Plotter\Operation.cpp" />
+    <ClCompile Include="Plotter\pugixml\pugixml.cpp" />
+    <ClCompile Include="Plotter\RotationLib.cpp" />
     <ClCompile Include="Presenter\EquationPresenter.cpp" />
     <ClCompile Include="Presenter\Utils\TreeBfsProcessor.cpp" />
     <ClCompile Include="Presenter\Utils\TreeDfsProcessor.cpp" />
@@ -125,6 +131,13 @@
     <ClInclude Include="Model\Utils\Caret.h" />
     <ClInclude Include="Model\Utils\Line.h" />
     <ClInclude Include="Model\Utils\Rect.h" />
+    <ClInclude Include="Plotter\calculator.h" />
+    <ClInclude Include="Plotter\GP.h" />
+    <ClInclude Include="Plotter\graphWindow.h" />
+    <ClInclude Include="Plotter\Operation.h" />
+    <ClInclude Include="Plotter\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="Plotter\pugixml\pugixml.hpp" />
+    <ClInclude Include="Plotter\RotationLib.h" />
     <ClInclude Include="Presenter\EquationPresenter.h" />
     <ClInclude Include="Presenter\Utils\TreeBfsProcessor.h" />
     <ClInclude Include="Presenter\Utils\TreeDfsProcessor.h" />

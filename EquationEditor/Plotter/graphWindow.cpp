@@ -2,7 +2,7 @@
 #include <Windowsx.h>
 #include <sstream>
 #include <cmath>
-#include "resource.h"
+#include "..\resource.h"
 #include "graphWindow.h"
 
 using namespace Gdiplus;
@@ -14,16 +14,22 @@ const wchar_t* GraphWindow::nameWindow = L"GraphWindow";
 BOOL __stdcall dialogProc2D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL __stdcall dialogProc3D(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-GraphWindow::GraphWindow(int width, int height, const wchar_t* formulaPath, bool is2D /*= false*/, bool isFillPolygonsIf3D /*= true */) :
+GraphWindow::GraphWindow(int width, int height) :
+	handle( nullptr ),
 	windowWidth(width),
 	windowHeight(height),
 	is2D(is2D),
-	graphInPoints( formulaPath, is2D, 40 ),
-	needToFillPolygons( isFillPolygonsIf3D ),
+	graphInPoints( 40 ),
 	cameraX(0),
 	cameraY(0),
 	cameraZ(0)
 {
+}
+
+void GraphWindow::SetParameters(const std::wstring& formula, bool _is2D, bool _isFillPolygonsIf3D) {
+	is2D = _is2D;
+	graphInPoints.SetParameters(formula, is2D);
+	needToFillPolygons = _isFillPolygonsIf3D;
 }
 
 bool GraphWindow::RegisterClass(HINSTANCE hInstance) {
@@ -49,7 +55,8 @@ bool GraphWindow::RegisterClass(HINSTANCE hInstance) {
 	return true;
 }
 
-bool GraphWindow::Create(HINSTANCE hInstance, int nCmdShow) {
+bool GraphWindow::Create(HINSTANCE hInstance, int nCmdShow, HWND _editorHandle) {
+	editorHandle = _editorHandle;
 	cmdShow = nCmdShow;
 
 	handle = ::CreateWindowEx( NULL, nameClassWindow, NULL, 
@@ -57,7 +64,7 @@ bool GraphWindow::Create(HINSTANCE hInstance, int nCmdShow) {
 		200, 20, windowWidth, windowHeight,
 		NULL, NULL, hInstance, this);
 
-	menu = ::LoadMenu(::GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU1));	// Загрузить меню из файла ресурса
+	menu = ::LoadMenu(::GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU2));	// Загрузить меню из файла ресурса
 	SetMenu(handle, menu);
 
 	return handle;
@@ -74,7 +81,7 @@ HWND GraphWindow::GetHandle() {
 
 void GraphWindow::OnCreate()
 {
-	HINSTANCE hInstance = (HINSTANCE) GetWindowLong( handle, GWL_HINSTANCE );
+	HINSTANCE hInstance = (HINSTANCE)::GetWindowLong( handle, GWL_HINSTANCE );
 
 	plusButton = plusButtonImage = new Image( L"plus.png" );
 	plusPressedButtonImage = new Image( L"plus_pressed.png" );
@@ -103,12 +110,12 @@ int GraphWindow::OnCommand( int loWord, int hiWord )
 
 void GraphWindow::OnDestroy()
 {
-	::PostQuitMessage( 0 );
-
 	delete plusButtonImage;
 	delete plusPressedButtonImage;
 	delete minusButtonImage;
 	delete minusPressedButtonImage;
+
+	::EnableWindow(editorHandle, true);
 }
 
 void GraphWindow::OnClose() {
@@ -155,11 +162,11 @@ void GraphWindow::OnKeyDown(WPARAM wParam) {
 		break;
 	// W key
 	case 0x57:
-		graphInPoints.moveAlongVector(graphInPoints.getLeftAndUpVectors().second);
+		graphInPoints.moveAlongVector(-graphInPoints.getLeftAndUpVectors().second);
 		break;
 	// S key
 	case 0x53:
-		graphInPoints.moveAlongVector(-graphInPoints.getLeftAndUpVectors().second);
+		graphInPoints.moveAlongVector(graphInPoints.getLeftAndUpVectors().second);
 		break;
 	default:
 		return;
@@ -518,9 +525,9 @@ void GraphWindow::OnPaint()
 }
 
 void GraphWindow::SetPosition(double newX, double newY, double newZ) {
-	graphInPoints.moveAlongX(cameraX - newX);
-	graphInPoints.moveAlongY(cameraY - newY);
-	graphInPoints.moveAlongZ(cameraZ - newZ);
+	graphInPoints.moveAlongX(graphInPoints.GetLengthOfSection() * (-cameraX + newX));
+	graphInPoints.moveAlongY(graphInPoints.GetLengthOfSection() * (-cameraY + newY));
+	graphInPoints.moveAlongZ(graphInPoints.GetLengthOfSection() * (-cameraZ + newZ));
 
 	cameraX = newX;
 	cameraY = newY;

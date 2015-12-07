@@ -3,16 +3,24 @@
 #include <random>
 #include <chrono>
 #include <algorithm>
+#include <sstream>
 
 pugi::xml_document MathMlCalculator::doc;
 double MathMlCalculator::eps = 0.005;
 
-MathMlCalculator::MathMlCalculator( const wchar_t* formulaPath, bool _is2D ) :
-	is2D( _is2D )
+MathMlCalculator::MathMlCalculator()
 {
-	pugi::xml_parse_result result = doc.load_file( formulaPath );
-	buildFormulas( doc );
-	srand( time( NULL ) );
+	pugi::xml_parse_result result = doc.load_file(L"Plotter/ex.xml");
+	buildFormulas(doc);
+	srand(time(NULL));
+}
+
+void MathMlCalculator::SetParameters(const std::wstring& formula, bool _is2D) {
+	is2D = _is2D;
+
+	std::wstringstream istring(formula);
+	pugi::xml_parse_result result = doc.load(istring);
+	buildFormulas(doc);
 }
 
 void MathMlCalculator::RecalculatePoints()

@@ -10,15 +10,17 @@ struct CTriangle {
 
 class GraphWindow {
 public:
-	GraphWindow( int width, int height, const wchar_t* formulaPath, bool is2D = false, bool isFillPolygonsIf3D = true );
+	GraphWindow( int width, int height );
 
 	static bool RegisterClass(HINSTANCE hInstance);
 
-	bool Create(HINSTANCE hInstance, int nCmdShow);
+	bool Create(HINSTANCE hInstance, int nCmdShow, HWND _editorHandle);
 
 	void Show();
 
 	HWND GetHandle();
+
+	void SetParameters(const std::wstring& formula, bool is2D = false, bool _isFillPolygonsIf3D = false);
 
 	void SetPosition(double newX, double newY, double newZ);
 
@@ -56,6 +58,7 @@ private:
 
 	int cmdShow;
 	HWND handle;
+	HWND editorHandle;
 	HWND setPositionDialogHandle;
 	HMENU menu;
 
