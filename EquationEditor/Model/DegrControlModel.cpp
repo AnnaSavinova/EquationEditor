@@ -72,12 +72,12 @@ void CDegrControlModel::InitializeChildren( std::shared_ptr<IBaseExprModel> init
 std::wstring CDegrControlModel::Serialize() {
 	std::wstring result = L"";
 	if (!secondChild->IsEmpty()) {
-		result += L"<apply><power/>" + secondChild->Serialize();
+		result += L"<power/>" + secondChild->Serialize();
 	}
 
 	result += params.text;
 	if (!firstChild->IsEmpty()) {
-		result += firstChild->Serialize() + L"</apply>";
+		result += firstChild->Serialize();
 	}
 
 	return result;

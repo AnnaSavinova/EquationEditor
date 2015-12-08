@@ -1,5 +1,6 @@
 ﻿#include "Model/ExprControlModel.h"
 #include "Model/EditControlModel.h"
+#include <sstream>
 
 CExprControlModel::CExprControlModel( const CRect& rect, const std::weak_ptr<IBaseExprModel> parent ) :
 	IBaseExprModel( rect, parent )
@@ -23,12 +24,96 @@ void CExprControlModel::InitializeChildren( std::shared_ptr<IBaseExprModel> init
 	PlaceChildren();
 }
 
-std::wstring CExprControlModel::Serialize() {
-	std::wstring result = L"";
-	for (auto child : children) {
-		result += child->Serialize();
+std::vector<std::wstring> CExprControlModel::getPatterns(const std::shared_ptr<IBaseExprModel> expr) const {
+	std::wstringstream wss(expr->Serialize());
+
+	std::vector<std::wstring> result;
+
+	std::wstring token;
+	while (wss >> token) {
+		result.push_back(token);
 	}
+
 	return result;
+}
+
+int CExprControlModel::getPriority(const std::wstring& operation) const {
+	if (operation == L"=") {
+		return 0;
+	}
+	else if ((operation == L"+") || (operation == L"-")) {
+		return 1;
+	}
+	else if ((operation == L"*") || (operation == L"/")) {
+		return 2;
+	}
+	else {
+		return -1;
+	}
+}
+
+void CExprControlModel::processOperation(std::vector<std::wstring>& results, const std::wstring& operation) const {
+	std::wstring leftOperand = results.back();
+	results.pop_back();
+
+	std::wstring rightOperand = results.back();
+	results.pop_back();
+
+	if (operation == L"+") {
+		results.push_back(L"<plus/><apply>" + rightOperand + L"</apply><apply>" + leftOperand + L"</apply>");
+	}
+	else if (operation == L"-") {
+		results.push_back(L"<minus/><apply>" + rightOperand + L"</apply><apply>" + leftOperand + L"</apply>");
+	}
+	else if (operation == L"*") {
+		results.push_back(L"<times/><apply>" + rightOperand + L"</apply><apply>" + leftOperand + L"</apply>");
+	} else if (operation == L"/") {
+		results.push_back(L"<divide/><apply>" + rightOperand + L"</apply><apply>" + leftOperand + L"</apply>");
+	}
+	else if (operation == L"=") {
+		results.push_back(L"<eq/><apply>" + rightOperand + L"</apply><apply>" + leftOperand + L"</apply>");
+	}
+}
+
+std::wstring CExprControlModel::writeOrderedPatterns(const std::vector<std::wstring>& patterns) const {
+	std::vector<std::wstring> results;
+	std::vector<std::wstring> operations;
+	for (auto pattern : patterns) {
+		if (pattern == L"#") {
+			continue;
+		}
+		else if ((pattern == L"=") || (pattern == L"+") || (pattern == L"-")
+			|| (pattern == L"*") || (pattern == L"/")) {
+
+			while (!operations.empty() && getPriority(operations.back()) >= getPriority(pattern)) {
+				processOperation(results, operations.back());
+				operations.pop_back();
+			}
+			operations.push_back(pattern);
+		}
+		else {
+			results.push_back(pattern);
+		}
+	}
+
+	while (!operations.empty()) {
+		processOperation(results, operations.back());
+		operations.pop_back();
+	}
+
+	return results.back();
+}
+
+std::wstring CExprControlModel::Serialize() {
+	std::vector<std::wstring> patterns;
+
+	for (std::shared_ptr<IBaseExprModel> child : children) {
+		for (std::wstring pattern : getPatterns(child)) {
+			patterns.push_back(pattern);
+		}
+	}
+
+	return  L"<apply>" + writeOrderedPatterns(patterns) + L"</apply>";
 }
 
 void CExprControlModel::RemoveChild(std::shared_ptr<IBaseExprModel> child)

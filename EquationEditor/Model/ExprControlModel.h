@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "Model/IBaseExprModel.h"
+#include <string>
+#include <vector>
 
 // Модель холдера для произвольного набора моделей
 // Должен всегда держать на себе хотя бы один EditControl
@@ -41,8 +43,17 @@ public:
 	std::wstring Serialize();
 
   void RemoveChild(std::shared_ptr<IBaseExprModel> child);
+
 private:
 	std::list<std::shared_ptr<IBaseExprModel>> children;
+
+	std::vector<std::wstring> getPatterns(const std::shared_ptr<IBaseExprModel> expr) const;
+
+	std::wstring writeOrderedPatterns(const std::vector<std::wstring>& patterns) const;
+
+	void processOperation(std::vector<std::wstring>& results, const std::wstring& operation) const;
+
+	int getPriority(const std::wstring& operation) const;
 
 	// высота оси, относительно которой центрируются все модели внутри данного выражения
 	int middle;

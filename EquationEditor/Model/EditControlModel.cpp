@@ -166,116 +166,38 @@ void CEditControlModel::MoveCaretRight( const IBaseExprModel* from, CCaret& care
 	}
 }
 
-int CEditControlModel::getPrecedence(std::wstring operation) {
-	if (operation == L"<plus/>" || operation == L"<minus/>")
-		return 2;
-
-	if (operation == L"<times/>" || operation == L"<divide/>")
-		return 3;
-
-	if (operation == L"<eq/>")
-		return 1;
-
-	return 0;
-}
-
 std::wstring CEditControlModel::Wrap(std::wstring &text, bool isNumber) {
-	if (text == L"")
-		return L"";
+	if (text == L"") {
+		return L"#";
+	}
+
 	if (isNumber)
-		return L"<cn>" + text + L"</cn>\n";
+		return L"<cn>" + text + L"</cn>";
 	else
-		return L"<ci>" + text + L"</ci>\n";
+		return L"<ci>" + text + L"</ci>";
 }
 
 std::wstring CEditControlModel::ParseText() {
 	std::wstring result = L""; 
-	std::stack <std::wstring> operationStack;
-	std::wstring currentOp;
-	std::wstring tmp;
 
 	std::wstring currentWord = L"";
 	bool isNumber = true;
-	for (int i = 0; i < params.text.length(); ++i) {
 
+	for (int i = 0; i < params.text.length(); ++i) {
 		if ((params.text[i] <= L'9') && (params.text[i] >= L'0') || (params.text[i] <= L'z') && (params.text[i] >= L'a')) {
 			currentWord += params.text[i];
 			isNumber = isNumber && (params.text[i] <= L'9') && (params.text[i] >= L'0');
-		} else { //if sign
-
-			if (operations.find(params.text[i]) != operations.end()) {
-				operationStack.push(Wrap(currentWord, isNumber));
-				currentWord = L"";
-				isNumber = true;
-
-				switch (params.text[i]) {
-				case L'+':
-					tmp = L"<plus/>";
-					break;
-				case L'-':
-					tmp = L"<minus/>";
-					break;
-				case L'*':
-					tmp = L"<times/>";
-					break;
-				case L'/':
-					tmp = L"<divide/>";
-					break;
-				case L'=':
-					tmp = L"<eq/>";
-					break;
-				default:
-					break;
-				}
-
-				while (operationStack.size() >= 3 && (getPrecedence(currentOp) >= getPrecedence(tmp)))
-				{
-					std::wstring a = operationStack.top();
-					operationStack.pop();
-					std::wstring op = currentOp = operationStack.top();
-					operationStack.pop();
-					std::wstring b = operationStack.top();
-					operationStack.pop();
-
-					std::wstring temp = op + L"\n" + b + a;
-					ReplaceStringInPlace(temp, L"<", L"  <");
-					ReplaceStringInPlace(temp, L"  </cn", L"</cn");
-					operationStack.push(L"<apply>\n" + temp + L"</apply>\n");
-				}
-				currentOp = tmp;
-				operationStack.push(tmp);
-			}
 		}
-	} //end for
-
-	if (currentWord != L"")
-		operationStack.push(Wrap(currentWord, isNumber));
-
-	while (operationStack.size() >= 3 && (getPrecedence(currentOp) >= getPrecedence(tmp)))
-	{
-		std::wstring a = operationStack.top();
-		operationStack.pop();
-		std::wstring op = currentOp = operationStack.top();
-		operationStack.pop();
-		std::wstring b = operationStack.top();
-		operationStack.pop();
-
-		std::wstring temp = op + L"\n" + b + a;
-		ReplaceStringInPlace(temp, L"<", L"  <");
-		ReplaceStringInPlace(temp, L"  </cn", L"</cn");
-		operationStack.push(L"<apply>\n" + temp + L"</apply>\n");
+		else {
+			result += Wrap(currentWord, isNumber) + L' ' + params.text[i] + L' ';
+			currentWord = L"";
+			isNumber = true;
+		}
 	}
 
-	return operationStack.top();
-}
+	result += Wrap(currentWord, isNumber);
 
-void CEditControlModel::ReplaceStringInPlace(std::wstring& subject, const std::wstring& search,
-	const std::wstring& replace) {
-	size_t pos = 0;
-	while ((pos = subject.find(search, pos)) != std::wstring::npos) {
-		subject.replace(pos, search.length(), replace);
-		pos += replace.length();
-	}
+	return result;
 }
 
 bool CEditControlModel::IsEmpty() const {
@@ -283,13 +205,6 @@ bool CEditControlModel::IsEmpty() const {
 }
 
 std::wstring CEditControlModel::Serialize() {
-	//if (!firstChild->IsEmpty()) {
-	//	firstChild->Serialize();
-	//}
-	//if (!secondChild->IsEmpty()) {
-	//	secondChild->Serialize();
-	//}
-
 	return ParseText();
 }
 

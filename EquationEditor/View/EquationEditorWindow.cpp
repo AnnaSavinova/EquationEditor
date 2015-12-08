@@ -118,7 +118,7 @@ void CEquationEditorWindow::OnLButtonDown( int xMousePos, int yMousePos )
 void CEquationEditorWindow::createPlotter() {
 	::EnableWindow(::GetParent(hwnd), false);
 
-	graphWindow = std::make_shared<GraphWindow>(700, 700, presenter->Serialize(), true, false);
+	graphWindow = std::make_shared<GraphWindow>(700, 700, presenter->Serialize(), false, true);
 
 	graphWindow->Create((HINSTANCE)::GetWindowLong(hwnd, GWL_HINSTANCE), cmdShow, ::GetParent(hwnd));
 	graphWindow->Show();
