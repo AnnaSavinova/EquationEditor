@@ -62,10 +62,6 @@ void CEquationEditorWindow::OnDestroy()
 void CEquationEditorWindow::OnCreate()
 {
 	HINSTANCE hInstance = reinterpret_cast< HINSTANCE >(::GetWindowLong( hwnd, GWL_HINSTANCE ));
-
-	// Добавляем меню
-//	HMENU hMenu = ::LoadMenu( hInstance, MAKEINTRESOURCE( IDR_MENU1 ) );
-//	::SetMenu( hwnd, hMenu );
 }
 
 void CEquationEditorWindow::UpdateScrollbar()
@@ -118,7 +114,7 @@ void CEquationEditorWindow::OnLButtonDown( int xMousePos, int yMousePos )
 void CEquationEditorWindow::createPlotter() {
 	::EnableWindow(::GetParent(hwnd), false);
 
-	graphWindow = std::make_shared<GraphWindow>(700, 700, presenter->Serialize(), false, true);
+	graphWindow = std::make_shared<GraphWindow>(700, 700, presenter->Serialize(), false, false);
 
 	graphWindow->Create((HINSTANCE)::GetWindowLong(hwnd, GWL_HINSTANCE), cmdShow, ::GetParent(hwnd));
 	graphWindow->Show();

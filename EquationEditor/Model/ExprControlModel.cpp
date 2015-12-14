@@ -113,7 +113,7 @@ std::wstring CExprControlModel::Serialize() {
 		}
 	}
 
-	return  L"<apply>" + writeOrderedPatterns(patterns) + L"</apply>";
+	return L"<apply>" + writeOrderedPatterns(patterns) + L"</apply>";
 }
 
 void CExprControlModel::RemoveChild(std::shared_ptr<IBaseExprModel> child)

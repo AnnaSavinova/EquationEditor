@@ -114,14 +114,6 @@ void GraphWindow::OnDestroy()
 }
 
 void GraphWindow::OnClose() {
-	int msgboxID = ::MessageBox(handle, (LPCWSTR)L"Do you surely want to exit?", (LPCWSTR)L"Exit",
-		MB_YESNO | MB_ICONWARNING);
-
-	switch (msgboxID) {
-	case IDNO:
-		return;
-	}
-
 	::DestroyWindow(handle);
 }
 
